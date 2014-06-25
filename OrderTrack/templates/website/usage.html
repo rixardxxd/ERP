@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    {% if usage_list %}
+    <table>
+    <tr>
+        <th>id</th>
+        <th>使用时间</th>
+        <th>货号</th>
+        <th>使用数量</th>
+    </tr>
+    {% for usage in usage_list %}
+    <tr>
+        <td>{{ usage.id }}</td>
+        <td>{{ usage.date_time}}</td>
+        <td>{{ usage.part_number}}</td>
+        <td>{{ usage.amount}}</td>
+    </tr>
+    {% endfor %}
+    </table>
+
+    {% else %}
+    <p>没有使用数量信息</p>
+    {% endif %}
+
+
+    <form action="{% url 'Website:addUsage' %}" method="post">{% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="提交" />
+    </form>
+</body>
+</html>

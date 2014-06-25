@@ -1,0 +1,171 @@
+{% extends "base.html" %}
+
+{% block meta %}
+    <title>数据录入</title>
+{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}vendor/datepicker/daterangepicker-bs3.css"/>
+{% endblock %}
+
+{% block angular %}
+    ng-app="Order" ng-controller="controller" ng-init="init()"
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="container bs-docs-container top-container">
+
+    <div class="row">
+    <div class="col-md-8 col-md-offset-2">
+        <div class="row report_section">
+            <div class="col-md-6 col-sm-6">
+                <p class="section_title">Date</p>
+            </div>
+            <div class="col-md-6 col-sm-6 align_text_right">
+                <div id="reportrange" class="pull-right"
+                     style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
+                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
+                    <span id="query_window"></span> <b class="caret"></b>
+                </div>
+            </div>
+        </div>
+        <div class="row dashboard_section_content">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div>
+                    <p class="section_title">Item Return</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="header">
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Operations</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#</td>
+                            <td>10</td>
+                            <td>20</td>
+                            <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row dashboard_section_content">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div>
+                    <p class="section_title">Item Delivered</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="header">
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Operations</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#</td>
+                            <td>10</td>
+                            <td>20</td>
+                            <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="row dashboard_section_content">
+            <div class="col-lg-12 col-sm-12 col-md-12">
+                <div>
+                    <p class="section_title">Item Usage</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr class="header">
+                            <th>#</th>
+                            <th>Item</th>
+                            <th>Amount</th>
+                            <th>Operations</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>#</td>
+                            <td>10</td>
+                            <td>20</td>
+                            <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+    <script src="{{ STATIC_URL }}angular/app/lib/angular/angular.min.js"></script>
+    <script src="{{ STATIC_URL }}angular/app/lib/angular/angular-resource.min.js"></script>
+    <script src="{{ STATIC_URL }}angular/app/lib/angular/angular-cookies.min.js"></script>
+
+    <script src="{{ STATIC_URL }}angular/app/js/app.js"></script>
+    <script src="{{ STATIC_URL }}angular/app/js/controllers.js"></script>
+    <script src="{{ STATIC_URL }}angular/app/js/services.js"></script>
+
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/moment.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/daterangepicker.js"></script>
+
+    <script>
+        var uid = {{ user.id }}
+        $(document).ready(function () {
+            //init the default query window
+            var theStartDate = new Date();
+            theStartDate.setDate(theStartDate.getDate() - 21)
+            var theEndDate = new Date()
+            $("#query_window").text(theStartDate.toLocaleDateString() + " - " + theEndDate.toLocaleDateString())
+            $('#reportrange').daterangepicker({ startDate: theStartDate, endDate: theEndDate });
+
+            //listen for calender changes
+            $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
+                console.log(picker.startDate.format('MM/DD/YYYY'));
+                console.log(picker.endDate.format('MM/DD/YYYY'));
+                $("#query_window").text(picker.startDate.format('MM/DD/YYYY') + " - " + picker.endDate.format('MM/DD/YYYY'));
+                var s = new Date(picker.startDate.format('MM/DD/YYYY'))
+                var t = new Date(picker.endDate.format('MM/DD/YYYY'))
+                angular_bridge_updateQuery(s, t, unit);
+            });
+
+            //trigger the default query
+            angular_bridge_updateQuery(theStartDate, theEndDate)
+            //trigger detection
+            if (need_detection > 0){
+                detectionIP();
+            }
+        });
+
+        //delegate to angular calls
+        function angular_bridge_updateQuery(startDate, endDate) {
+            var scope = angular.element($("#query_panel")).scope();
+            scope.$apply(function () {
+                scope.queryRecords(startDate, endDate)
+            })
+        }
+
+    </script>
+
+{% endblock %}

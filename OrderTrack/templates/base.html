@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" {% block html_attribute %} {% endblock %}>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% block meta %} {% endblock %}
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}vendor/bootstrap-3.1.1/css/bootstrap.min.css">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="{{ STATIC_URL }}vendor/bootstrap-3.1.1/css/bootstrap-theme.min.css">
+
+    <!-- Document css -->
+    <link href="{{ STATIC_URL }}css/docs.css" rel="stylesheet">
+    <!-- Customized CSS -->
+    <link href="{{ STATIC_URL}}css/custom.css" rel="stylesheet">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    {% block head %} {% endblock %}
+</head>
+
+<body class="bs-docs-home" {% block angular %} {% endblock %}>
+<a class="sr-only" href="#content">Skip to main content</a>
+
+<!-- Main nav header -->
+{% block header %}
+
+    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
+        <div class="container">
+            <div class="navbar-header">
+                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+                <ul class="nav navbar-nav">
+                    <li>
+                        <a href="/">数据录入</a>
+                    </li>
+                    <li>
+                        <a href="/delivery-report/">发货情况</a>
+                    </li>
+                    <li>
+                        <a href="/return-report/">退货情况</a>
+                    </li>
+                    <li>
+                        <a href="/usage-report/">使用情况</a>
+                    </li>
+                    <li>
+                        <a href="/summary-report/">寄卖情况</a>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    {% if user.is_authenticated %}
+                        <li><a href="/profile/">{{ user.first_name }}</a>
+                        </li>
+                        <li><a href="/logout/">Log Out</a></li>
+                    {% else %}
+                        <li><a href="/login/?next={{ request.path }}">Log In</a></li>
+                    {% endif %}
+                </ul>
+
+            </nav>
+        </div>
+    </header>
+{% endblock %}
+
+
+{% block content %}
+<!-- Page content of course! -->
+<main class="bs-docs-masthead" id="content" role="main">
+    <div class="container">
+        <p class="lead">The community for Sharers.</p>
+
+        <p class="lead">
+            <a href="getting-started#download" class="btn btn-outline-inverse btn-lg">Join The Community</a>
+        </p>
+
+        <p class="version">Currently v3.1.1</p>
+    </div>
+</main>
+
+<div class="bs-docs-featurette">
+    <div class="container">
+        <h2 class="bs-docs-featurette-title">Love Your Sharing LifeStyle.</h2>
+
+        <p class="lead">Track, compare, and connect your driving and delivery work.</p>
+
+        <hr class="half-rule">
+
+        <div class="row">
+            <div class="col-sm-4">
+                <img src="{{ STATIC_URL }}assets/img/sass-less.png" alt="Sass and Less support" class="img-responsive">
+
+                <h3>Connected</h3>
+
+                <p>Be part of growing community of sharing economy, share your story.</p>
+            </div>
+            <div class="col-sm-4">
+                <img src="{{ STATIC_URL }}assets/img/devices.png" alt="Responsive across devices" class="img-responsive">
+
+                <h3>Analytics</h3>
+
+                <p>Track and measure your performance among the community and learn more about your financial and see all your options.</p>
+            </div>
+            <div class="col-sm-4">
+                <img src="{{ STATIC_URL }}assets/img/components.png" alt="Components" class="img-responsive">
+
+                <h3>Updated</h3>
+
+                <p>With our news feeds, you get curated information relevant to you, your local community and your industry. Keep you posted and stay tuned.</p>
+            </div>
+        </div>
+
+        <hr class="half-rule">
+
+        <p class="lead">Subscribe to our newsletter</p>
+
+        <p>Sign up now to our newsletter and you'll be one of the first to know when the site is ready:</p>
+
+        <form class="form-inline" role="form">
+          <div class="form-group">
+            <label class="sr-only" for="inputEmail">Email address</label>
+            <input type="email"  class="form-control" id="inputEmail" placeholder="Enter email">
+          </div>
+          <div class="success-message" style="display: none;"></div>
+          <div class="error-message" style="display: none;"></div>
+          <button type="submit" class="btn btn-outline">Subscribe</button>
+        </form>
+    </div>
+</div>
+{% endblock %}
+<!-- Footer
+==================================================
+-->
+
+{% block footer %}
+{% endblock %}
+
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="{{ STATIC_URL }}vendor/bootstrap-3.1.1/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/docs.min.js"></script>
+
+{% block javascript %} {% endblock %}
+{% block analytics %} {% endblock %}
+</body>
+</html>

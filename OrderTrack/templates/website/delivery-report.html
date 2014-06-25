@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+{% load mathfilters %}
+
+{% block meta %}
+    <title>发货情况</title>
+{% endblock %}
+
+{% block head %}
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}vendor/datepicker/daterangepicker-bs3.css"/>
+{% endblock %}
+
+{% block angular %}
+    ng-app="Order" ng-controller="controller" ng-init="init()"
+{% endblock %}
+
+
+
+{% block content %}
+    <div class="container bs-docs-container top-container">
+     {% if delivery_list %}
+        <table class="table table-bordered">
+        <tr>
+            <th>发货时间</th>
+            <th>货号</th>
+            <th>部件号</th>
+            <th>发货数量</th>
+        </tr>
+        {% for delivery in delivery_list %}
+        <tr>
+            <td>{{ delivery.date}}</td>
+            <td>{{ delivery.OTItem.item_no}}</td>
+            <td>{{ delivery.OTItem.part_no}}</td>
+            <td>{{ delivery.amount | abs }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+
+        {% else %}
+        <p>暂时没有发货数量信息</p>
+        {% endif %}
+
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
