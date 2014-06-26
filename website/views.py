@@ -7,6 +7,7 @@ from models import OTItem, OTItemDelivery, OTItemReturn, OTItemStorage, OTItemUs
 from django.db.models import Sum
 
 
+
 from django.http import HttpResponse
 from django.shortcuts import render_to_response, render, HttpResponseRedirect, redirect
 from django.contrib.auth import logout, login
@@ -16,6 +17,9 @@ from django.template import RequestContext
 from django.forms.models import model_to_dict
 
 from forms import LoginForm, SignupForm
+
+from utils import get_sql_data
+from sql import Sql
 
 #rest framework
 from rest_framework import status
@@ -59,7 +63,7 @@ def login_view(request):
 
 def logout_view(request):
     logout(request)
-    return HttpResponseRedirect(request.META.get('HTTP_REFERER','/'))
+    return HttpResponseRedirect('/login/')
 
 def register_view(request):
     if request.method == 'POST':
@@ -80,36 +84,38 @@ def register_view(request):
         'form': form,
     })
 
+@login_required
 def member_view(request):
     dict = {}
     return render_to_response('website/day.html', RequestContext(request, dict))
 
+@login_required
 def usage_report_view(request):
     usage_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_usage).order_by('date')
     print usage_list
     dict = {'usage_list':usage_list}
     return render_to_response('website/usage-report.html', RequestContext(request, dict))
-
+@login_required
 def return_report_view(request):
     return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('date')
     print return_list
     dict = {'return_list':return_list}
     return render_to_response('website/return-report.html', RequestContext(request, dict))
-
+@login_required
 def delivery_report_view(request):
     delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('date')
     print delivery_list.query
     dict = {'delivery_list':delivery_list}
     return render_to_response('website/delivery-report.html', RequestContext(request, dict))
-
+@login_required
 def summary_report_view(request):
 
-    inventory_list = OTItemDaily.objects.values('OTItem').annotate(sum = Sum('amount'))
-
-
-    print inventory_list.query
+    #inventory_list = OTItemDaily.objects.values('OTItem').annotate(sum = Sum('amount'))
+    inventory_list = get_sql_data(Sql.summary_sql)
+    print inventory_list
     dict = {'inventory_list':inventory_list}
     return render_to_response('website/summary-report.html', RequestContext(request, dict))
+
 
 
 # ------------------------------------------------- #

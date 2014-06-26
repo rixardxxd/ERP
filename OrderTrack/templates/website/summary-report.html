@@ -23,13 +23,29 @@
         <tr>
             <th>货号</th>
             <th>部件号</th>
+            <th>寄存数量</th>
+            <th>发货总量</th>
+            <th>退货总量</th>
+            <th>使用总量</th>
             <th>库存</th>
+            <th>需补充数量</th>
         </tr>
         {% for inventory in inventory_list %}
         <tr>
-            <td>{{ inventory.OTItem.item_no}}</td>
-            <td>{{ inventory.OTItem.part_no}}</td>
-            <td>{{ inventory.sum | abs }}</td>
+            <td>{{ inventory.item_no}}</td>
+            <td>{{ inventory.part_no}}</td>
+            <td>{{ inventory.consignment}}</td>
+            <td>{{ inventory.delivery_sum | abs}} </td>
+            <td>{{ inventory.return_sum | abs}} </td>
+            <td>{{ inventory.usage_sum | abs}} </td>
+            <td>{{ inventory.total_sum }}</td>
+            {% if inventory.consignment|sub:inventory.total_sum > 0 %}
+            <td>{{ inventory.consignment| sub:inventory.total_sum }}</td>
+            {% endif%}
+            {% if inventory.consignment|sub:inventory.total_sum <= 0 %}
+            <td> 0 </td>
+            {% endif%}
+
         </tr>
         {% endfor %}
         </table>

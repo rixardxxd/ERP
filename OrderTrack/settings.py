@@ -40,6 +40,7 @@ INSTALLED_APPS = (
     'gunicorn',
     'mathfilters',
     'website',
+    'south'
 )
 
 MIDDLEWARE_CLASSES = (
@@ -101,3 +102,10 @@ TEMPLATE_DIRS = (
     # Don't forget to use absolute paths, not relative paths.
     os.path.join(BASE_DIR, 'OrderTrack/templates/'),
 )
+
+
+
+LOGIN_REDIRECT_URL = '/member/'
+
+LOGIN_URL = '/login/'
+

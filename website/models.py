@@ -21,6 +21,7 @@ class OTItem(models.Model):
     part_no = models.CharField(max_length=100)
     item_no = models.CharField(max_length=100)
     di_standard = models.ForeignKey('OTDIStandard')
+    consignment = models.PositiveIntegerField(default=0)
     desc = models.CharField(max_length=255, null=True, blank=True, help_text='Description of the item')
 
     objects = models.Manager()
@@ -119,7 +120,5 @@ class OTItemDaily(models.Model):
             return
         else:
             super(OTItemDaily, self).save(*args, **kwargs)
-
-
 
 
