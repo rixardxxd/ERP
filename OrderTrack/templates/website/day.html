@@ -22,7 +22,7 @@
     <div class="col-md-8 col-md-offset-2">
         <div class="row report_section">
             <div class="col-md-6 col-sm-6">
-                <p class="section_title">Date</p>
+                <button type="button" class="btn btn-primary">货物</button>
             </div>
             <div class="col-md-6 col-sm-6 align_text_right">
                 <div id="reportrange" class="pull-right"
@@ -134,24 +134,22 @@
         var uid = {{ user.id }}
         $(document).ready(function () {
             //init the default query window
-            var theStartDate = new Date();
-            theStartDate.setDate(theStartDate.getDate() - 21)
             var theEndDate = new Date()
-            $("#query_window").text(theStartDate.toLocaleDateString() + " - " + theEndDate.toLocaleDateString())
-            $('#reportrange').daterangepicker({ startDate: theStartDate, endDate: theEndDate });
+            $("#query_window").text(theEndDate.toLocaleDateString())
+            $('#reportrange').daterangepicker({
+                singleDatePicker: true
+            });
 
             //listen for calender changes
             $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
                 console.log(picker.startDate.format('MM/DD/YYYY'));
                 console.log(picker.endDate.format('MM/DD/YYYY'));
-                $("#query_window").text(picker.startDate.format('MM/DD/YYYY') + " - " + picker.endDate.format('MM/DD/YYYY'));
+                $("#query_window").text(picker.startDate.format('MM/DD/YYYY'));
                 var s = new Date(picker.startDate.format('MM/DD/YYYY'))
                 var t = new Date(picker.endDate.format('MM/DD/YYYY'))
                 angular_bridge_updateQuery(s, t, unit);
             });
 
-            //trigger the default query
-            angular_bridge_updateQuery(theStartDate, theEndDate)
             //trigger detection
             if (need_detection > 0){
                 detectionIP();
