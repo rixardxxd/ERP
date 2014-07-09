@@ -116,6 +116,12 @@ def summary_report_view(request):
     dict = {'inventory_list':inventory_list}
     return render_to_response('website/summary-report.html', RequestContext(request, dict))
 
+@login_required
+def products_view(request):
+    products_list = OTItem.objects.all()
+    dict = {'products_list':products_list}
+    return render_to_response('website/products.html', RequestContext(request, dict))
+
 
 
 # ------------------------------------------------- #

@@ -13,6 +13,8 @@ urlpatterns = patterns('',
     url(r'^return-report/$', views.return_report_view, name="return-report"),
     url(r'^delivery-report/$', views.delivery_report_view, name="delivery-report"),
     url(r'^summary-report/$', views.summary_report_view, name="summary-report"),
+    url(r'^products/$', views.products_view, name="products"),
+
 
 
     #restful APIs, hacky way for now
