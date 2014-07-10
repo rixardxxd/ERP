@@ -157,7 +157,7 @@ class OTItemDaily(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     date = models.DateField(help_text='记录日期')
     OTItem = models.ForeignKey('OTItem')
-    amount = models.IntegerField(default=0,help_text='使用数量需为负，发货数量需为正，退货数量需为负')
+    amount = models.PositiveIntegerField(default=0,help_text='数量需为正')
     type = models.CharField(max_length=1,choices=TYPE)
     objects = models.Manager()
 
@@ -169,13 +169,6 @@ class OTItemDaily(models.Model):
         return u'date: {} item: {} amout: {} type: {}'.format(self.date, self.OTItem, self.amount, self.type)
 
     def save(self,*args, **kwargs):
-        if ( self.type == self.type_usage or self.type == self.type_return ) and self.amount > 0 :
-            #raise ValidationError('使用数量需为负，退货数量需为负');
-            return
-        elif self.type == self.type_delivery and self.amount < 0:
-            #raise ValidationError('发货数量需为正')
-            return
-        else:
-            super(OTItemDaily, self).save(*args, **kwargs)
+        super(OTItemDaily, self).save(*args, **kwargs)
 
 

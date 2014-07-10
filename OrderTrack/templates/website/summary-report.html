@@ -41,12 +41,8 @@
             <td>{{ inventory.return_sum | abs}} </td>
             <td>{{ inventory.usage_sum | abs}} </td>
             <td>{{ inventory.total_sum }}</td>
-            {% if inventory.consignment_amount|sub:inventory.total_sum > 0 %}
-            <td>{{ inventory.consignment_amount| sub:inventory.total_sum }}</td>
-            {% endif%}
-            {% if inventory.consignment_amount|sub:inventory.total_sum <= 0 %}
-            <td> 0 </td>
-            {% endif%}
+            <td>{{ inventory.supplement}}</td>
+
 
         </tr>
         {% endfor %}

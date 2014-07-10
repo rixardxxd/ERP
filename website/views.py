@@ -112,7 +112,15 @@ def summary_report_view(request):
 
     #inventory_list = OTItemDaily.objects.values('OTItem').annotate(sum = Sum('amount'))
     inventory_list = get_sql_data(Sql.summary_sql)
-    print inventory_list
+    for i, val in enumerate(inventory_list):
+
+        total_sum = val.get("delivery_sum") - val.get("return_sum") - val.get("usage_sum")
+        val.update({"total_sum":total_sum})
+        supplement = val.get("consignment_amount") - total_sum
+        if val.get("consignment_amount") - total_sum < 0:
+            supplement = 0;
+        val.update({"supplement":supplement})
+        print i, val
     dict = {'inventory_list':inventory_list}
     return render_to_response('website/summary-report.html', RequestContext(request, dict))
 
