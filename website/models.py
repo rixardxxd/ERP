@@ -45,8 +45,8 @@ class OTItem(models.Model):
     Generic entity table for item
     '''
     id = models.AutoField(primary_key=True)
-    part_no = models.CharField(max_length=100)
-    item_no = models.CharField(max_length=100)
+    part_no = models.CharField(max_length=100,unique=True)
+    item_no = models.CharField(max_length=100,unique=True)
     size = models.CharField(max_length=100,null=True)
     di_standard = models.ForeignKey('OTDIStandard')
     consignment_amount = models.PositiveIntegerField(default=0)
@@ -91,60 +91,6 @@ class OTItemStorage(models.Model):
         verbose_name = "库存列表"
     def __unicode__(self):
         return u'{} {}'.format(self.item, self.total_count)
-
-class OTItemDelivery(models.Model):
-    '''
-    Track the delivery history of item
-    '''
-    id = models.AutoField(primary_key=True)
-    create_time = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(help_text='Track the date for easy query later')
-    OTItem = models.ForeignKey('OTItem')
-    amount = models.IntegerField(default=0)
-
-    objects = models.Manager()
-
-    class Meta:
-        verbose_name = "发货列表"
-
-    def __unicode__(self):
-        return u'{} {} item:{} amout:{}'.format(self.id, self.date, self.OTItem, self.amount)
-
-class OTItemReturn(models.Model):
-    '''
-    Track the return history of item
-    '''
-    id = models.AutoField(primary_key=True)
-    create_time = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(help_text='Track the date for easy query later')
-    OTItem = models.ForeignKey('OTItem')
-    amount = models.IntegerField(default=0)
-
-    objects = models.Manager()
-
-    class Meta:
-        verbose_name = "退货列表"
-    def __unicode__(self):
-        return u'{} {} item:{} amout:{}'.format(self.id, self.date, self.OTItem, self.amount)
-
-
-class OTItemUsage(models.Model):
-    '''
-    Track the return history of item
-    '''
-    id = models.AutoField(primary_key=True)
-    create_time = models.DateTimeField(auto_now_add=True)
-    date = models.DateField(help_text='Track the date for easy query later')
-    OTItem = models.ForeignKey('OTItem')
-    amount = models.IntegerField(default=0)
-
-    objects = models.Manager()
-
-    class Meta:
-        verbose_name = "使用列表"
-    def __unicode__(self):
-        return u'{} {} item:{} amout:{}'.format(self.id, self.date, self.OTItem, self.amount)
-
 
 
 class OTItemDaily(models.Model):

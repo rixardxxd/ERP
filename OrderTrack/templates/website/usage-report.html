@@ -17,32 +17,163 @@
 
 
 {% block content %}
+    <div class="container">
+        <a href="/usage-report/">最近三个月情况</a>
+        <a href="/usage-report/?dimension=month">按月查询</a>
+        <a href="/usage-report/?dimension=day">按日查询</a>
+    </div>
     <div class="container bs-docs-container top-container">
-     {% if usage_list %}
+     {% if daily_usage_list %}
+        <div class="container">
+            <label for="from">起始日期</label>
+            <input type="text" id="from" name="from">
+            <label for="to">终止日期</label>
+            <input type="text" id="to" name="to">
+            <label for="part-no">Part No</label>
+            <input type="text" id="part-no" name="part-no">
+            <button class="btn btn-info btn-sm" id="query">查询</button>
+        </div>
         <table class="table table-bordered">
+
         <tr>
             <th>使用时间</th>
-            <th>货号</th>
-            <th>部件号</th>
+            <th>part no</th>
+            <th>item no</th>
+            <th>size no</th>
             <th>使用数量</th>
         </tr>
-        {% for usage in usage_list %}
+        {% for usage in daily_usage_list %}
         <tr>
-            <td>{{ usage.date}}</td>
-            <td>{{ usage.OTItem.item_no}}</td>
+            <td>{{ usage.date | date:"Y年m月d日"}}</td>
             <td>{{ usage.OTItem.part_no}}</td>
+            <td>{{ usage.OTItem.item_no}}</td>
+            <td>{{ usage.OTItem.size}}</td>
             <td>{{ usage.amount | abs }}</td>
         </tr>
         {% endfor %}
         </table>
 
-        {% else %}
-        <p>暂时没有使用数量信息</p>
-        {% endif %}
+     {% endif %}
+
+      {% if monthly_usage_list %}
+        <div class="container">
+            <label for="from">起始日期</label>
+            <input type="text" id="from" name="from">
+            <label for="to">终止日期</label>
+            <input type="text" id="to" name="to">
+            <label for="part-no">Part No</label>
+            <input type="text" id="part-no" name="part-no">
+            <button class="btn btn-info btn-sm" id="query">查询</button>
+        </div>
+        <table class="table table-bordered">
+        <tr>
+            <th>使用月份</th>
+            <th>part no</th>
+            <th>item no</th>
+            <th>size no</th>
+            <th>使用数量</th>
+        </tr>
+        {% for usage in monthly_usage_list %}
+        <tr>
+            <td>{{ usage.date | date:"Y年m月"}}</td>
+            <td>{{ usage.OTItem.part_no}}</td>
+            <td>{{ usage.OTItem.item_no}}</td>
+            <td>{{ usage.OTItem.size}}</td>
+            <td>{{ usage.amount | abs }}</td>
+        </tr>
+        {% endfor %}
+        </table>
+
+     {% endif %}
+
+     {% if summary_usage_list %}
+        <table class="table table-bordered">
+        <tr>
+            <th>part no</th>
+            <th>item no</th>
+            <th>size</th>
+            <th>{{third_month}}</th>
+            <th>{{second_month}}</th>
+            <th>{{current_month}}</th>
+        </tr>
+        {% for usage in summary_usage_list %}
+        <tr>
+            <td>{{ usage.part_no}}</td>
+            <td>{{ usage.item_no}}</td>
+            <td>{{ usage.size}}</td>
+            <td>{{ usage.third_month_sum | abs }}</td>
+            <td>{{ usage.second_month_sum | abs }}</td>
+            <td>{{ usage.current_month_sum | abs }}</td>
+
+        </tr>
+        {% endfor %}
+        </table>
+
+     {% endif %}
 
     </div>
 {% endblock %}
 
 {% block javascript %}
+ <script>
+      $(function() {
+        $.datepicker.setDefaults($.datepicker.regional['zh-TW']);
+        $( "#from" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 2,
+          onClose: function( selectedDate ) {
+            $( "#to" ).datepicker( "option", "minDate", selectedDate );
+          }
+        });
+        $( "#to" ).datepicker({
+          defaultDate: "+1w",
+          changeMonth: true,
+          numberOfMonths: 2,
+          onClose: function( selectedDate ) {
+            $( "#from" ).datepicker( "option", "maxDate", selectedDate );
+          }
+        });
 
+        $("#query").click(function() {
+
+         var start_date = $("#from").val();
+         var end_date = $("#to").val();
+         var part_no = $("#part-no").val();
+
+         var queryParameters = {};
+         var queryString = location.search.substring(1);
+         var re = /([^&=]+)=([^&]*)/g;
+         var m;
+
+        // Creates a map with the query string parameters
+        while (m = re.exec(queryString)) {
+            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        delete queryParameters['startDate'];
+        delete queryParameters['endDate'];
+        delete queryParameters['part-no'];
+
+        // Add new parameters or update existing ones
+        if(start_date != null && start_date != "")
+            queryParameters['startDate'] = start_date;
+        if(end_date != null && end_date != "")
+            queryParameters['endDate'] = end_date;
+        if(part_no != null && part_no !="")
+            queryParameters['part-no'] = part_no;
+
+        /*
+         * Replace the query portion of the URL.
+         * jQuery.param() -> create a serialized representation of an array or
+         *     object, suitable for use in a URL query string or Ajax request.
+         */
+        location.search = $.param(queryParameters);
+
+
+         });
+
+      });
+
+
+ </script>
 {% endblock %}

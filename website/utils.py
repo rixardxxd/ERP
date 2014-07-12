@@ -15,3 +15,10 @@ def dictfetchall(cursor):
         dict(zip([col[0] for col in desc], row))
         for row in cursor.fetchall()
     ]
+
+def get_sql_data_params(sql,params):
+    cursor = connection.cursor()
+
+    cursor.execute(sql,params)
+
+    return dictfetchall(cursor)

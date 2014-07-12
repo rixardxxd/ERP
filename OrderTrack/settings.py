@@ -40,7 +40,8 @@ INSTALLED_APPS = (
     'gunicorn',
     'mathfilters',
     'website',
-    'south'
+    'south',
+    'dateutil'
 )
 
 MIDDLEWARE_CLASSES = (
