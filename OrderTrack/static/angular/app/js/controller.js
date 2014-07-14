@@ -1,6 +1,5 @@
 'use strict';
 
-
 var controller = Order.controller('controller', function($scope, $window, RestService, $location, $anchorScroll, $timeout){
     //handle the jump to the focused html tag
     $scope.scrollTo = function(id) {

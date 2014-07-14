@@ -1,0 +1,871 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"click",
+				"clickableContainer  (variable)"
+			],
+			[
+				"cli",
+				"clickableContainer"
+			],
+			[
+				"parent",
+				"parentVideoSlot"
+			],
+			[
+				"hi",
+				"height"
+			],
+			[
+				"setAttr",
+				"setAttribute  (function)"
+			],
+			[
+				"call",
+				"callback"
+			],
+			[
+				"Lin",
+				"LinearAd"
+			],
+			[
+				"AdPa",
+				"AdParameters"
+			],
+			[
+				"video",
+				"videoslot"
+			],
+			[
+				"_c",
+				"_clickableIcon"
+			],
+			[
+				"css",
+				"cssText  (variable)"
+			],
+			[
+				"create",
+				"createElement  (function)"
+			],
+			[
+				"_cl",
+				"_clickableAdDiv"
+			],
+			[
+				"pasr",
+				"parseBeaconUrlTemplate"
+			],
+			[
+				"creat",
+				"creativeData"
+			],
+			[
+				"ad",
+				"adElement"
+			],
+			[
+				"adE",
+				"adEngine"
+			],
+			[
+				"_",
+				"_showClickableItem"
+			],
+			[
+				"build-",
+				"build-clickable"
+			],
+			[
+				"sho",
+				"_showClickableItem"
+			],
+			[
+				"clic",
+				"ClickableAd"
+			],
+			[
+				"crea",
+				"creativeData"
+			],
+			[
+				"en",
+				"environmentVars"
+			],
+			[
+				"comm",
+				"communicator"
+			],
+			[
+				"samp",
+				"sample"
+			],
+			[
+				"V",
+				"Vtc"
+			],
+			[
+				"social",
+				"socialMedia"
+			],
+			[
+				"soci",
+				"socialMedia"
+			],
+			[
+				"say",
+				"saywhat"
+			],
+			[
+				"no",
+				"normal"
+			],
+			[
+				"firstC",
+				"firstCat  (variable)"
+			],
+			[
+				"proto",
+				"prototype"
+			],
+			[
+				"fir",
+				"firstDog"
+			],
+			[
+				"con",
+				"console"
+			],
+			[
+				"is",
+				"isCompleted"
+			],
+			[
+				"check",
+				"checked"
+			],
+			[
+				"fil",
+				"filterBy"
+			],
+			[
+				"active",
+				"activeClass"
+			],
+			[
+				"tO",
+				"Todos"
+			],
+			[
+				"fun",
+				"function"
+			],
+			[
+				"Edit",
+				"EditTodoView"
+			],
+			[
+				"pro",
+				"property"
+			],
+			[
+				"Todos",
+				"TodosController"
+			],
+			[
+				"scr",
+				"script	Tag"
+			],
+			[
+				"font",
+				"font-weight"
+			],
+			[
+				"link",
+				"link-to"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/Users/kailian/Downloads/square-v1.3/square/client/views/header.html",
+			"settings":
+			{
+				"buffer_size": 13647,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/kailian/Downloads/square-v1.3/square/client/views/nav.html",
+			"settings":
+			{
+				"buffer_size": 6316,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/kailian/Downloads/square-v1.3/square/client/views/dashboard.html",
+			"settings":
+			{
+				"buffer_size": 6322,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/Users/kailian/Downloads/square-v1.3/square/client/index.html",
+			"settings":
+			{
+				"buffer_size": 6028,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"command_palette":
+	{
+		"height": 392.0,
+		"selected_items":
+		[
+			[
+				"pack",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"",
+				"Package Control: Install Package"
+			],
+			[
+				"discover",
+				"Package Control: Discover Packages"
+			]
+		],
+		"width": 389.0
+	},
+	"console":
+	{
+		"height": 139.0,
+		"history":
+		[
+			"import urllib.request,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by)",
+			"import urllib2,os,hashlib; h = '7183a2d3e96f11eeadd761d777e62404' + 'e330c659d4bb41d3bdf022e94cab3cd0'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); os.makedirs( ipp ) if not os.path.exists(ipp) else None; urllib2.install_opener( urllib2.build_opener( urllib2.ProxyHandler()) ); by = urllib2.urlopen( 'http://sublime.wbond.net/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); open( os.path.join( ipp, pf), 'wb' ).write(by) if dh == h else None; print('Error validating download (got %s instead of %s), please try manual install' % (dh, h) if dh != h else 'Please restart Sublime Text to finish installation')"
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/Users/kailian/Desktop/vpaidjs/src/viewable-wrapper.js",
+		"/Users/kailian/Desktop/vpaidjs/test-unit/linear-vpaid-spec.js",
+		"/Users/kailian/Desktop/vpaidjs/test-unit/viewable-spec.js",
+		"/Users/kailian/Desktop/vpaidjs/test-unit/utils-spec.js",
+		"/Users/kailian/Desktop/vpaidjs/test-unit/clickable-spec.js",
+		"/Users/kailian/Desktop/vpaidjs/test-func/clickable-func.js",
+		"/Users/kailian/Desktop/vpaidjs/build/vpaidjs-0.0.1-debug-3.js",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/samplexml/sample.xml",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/style.css",
+		"/Users/kailian/Desktop/vpaidjs/src/vpaidjs-debug.js",
+		"/Users/kailian/Desktop/vpaidjs/test-func/viewability-func.js",
+		"/Users/kailian/Desktop/vpaidjs/src/clickable-wrapper.js",
+		"/Users/kailian/Desktop/vpaidjs/index.js",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/vpaidjs-debug.js",
+		"/Users/kailian/Desktop/vpaidjs/Gruntfile.js",
+		"/Users/kailian/Desktop/vpaidjs/build/vpaidjs-0.0.1-debug-2.js",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/vpaidjs-0.0.1-debug-2.js",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/yvpaid-debug.js",
+		"/Users/kailian/Desktop/vpaidjs/src/linear-vpaid-core.js",
+		"/Users/kailian/Desktop/vpaidjs/src/interactive-wrapper.js",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/phantomjs/install.js",
+		"/Users/kailian/Desktop/vpaidjs/package.json",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/grunt-contrib-clean/CHANGELOG",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/grunt-contrib-clean/docs/clean-options.md",
+		"/Users/kailian/Desktop/vpaidjs/screwdriver/config.json",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/grunt/CONTRIBUTING.md",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/grunt/node_modules/minimatch/node_modules/lru-cache/CONTRIBUTORS",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/grunt-contrib-uglify/node_modules/uglify-js/node_modules/optimist/LICENSE",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/jasmine-node/node_modules/walkdir/test/comparison/install_test_deps.sh",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/lib/vendor/web-socket-js/flash-src/com/hurlant/crypto/symmetric/NullPad.as",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/examples/WEB-INF/classes/jsp2/examples/simpletag/HelloWorldSimpleTag.java",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/.bin/jasmine-node",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/karma/node_modules/socket.io/node_modules/socket.io-client/node_modules/ws/test/fixtures/agent1-cert.pem",
+		"/Users/kailian/Desktop/vpaidjs/node_modules/karma/node_modules/socket.io/node_modules/redis/generate_commands.js",
+		"/Users/kailian/Desktop/videoplayer/nextgen/src/yvap/communicator/vpaid-test-communicator.js",
+		"/Users/kailian/Desktop/videoplayer/artifacts/videoplayer-nextgen-debug.js",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/samplexml/yvpaid-debug.js",
+		"/Users/kailian/Documents/videoplayer/nextgen/src/yvap/cache/CacheEntry.js",
+		"/Users/kailian/Desktop/videoplayer/nextgen/src/yvap/cache/CacheManager.js",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/videoplayer-nextgen-debug.js",
+		"/Users/kailian/Documents/videoplayer/nextgen/src/yvap/cache/CacheManager.js",
+		"/Users/kailian/Desktop/assignment/videoAd/src/app.js",
+		"/Users/kailian/Desktop/assignment/videoAd/src/vpaidAd.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/03_03/start/functions/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/03_03/start/functions/index.html",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/03_02/start/functions/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/03_02/start/functions/index.html",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/03_01/start/functions/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_08/challenge/index.html",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_08/challenge/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_08/challenge/style.css",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_07/challenge/style.css",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_07/challenge/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_07/challenge/index.html",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/02_01/functions/script.js",
+		"/Users/kailian/Library/Application Support/Sublime Text 3/Packages/User/Default (OSX).sublime-keymap",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/01_02/start/functions/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/01_01/start/functions/script.js",
+		"/Users/kailian/Downloads/Ex_Files_JaSFun/Exercise Files/01_01/start/functions/index.html",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/test-func/viewability-func.js",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/build/vpaidjs-viewable-min.js",
+		"/Users/kailian/Documents/videoplayer/nextgen/README.md",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/test-common/mockplayer.js",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/test-common/test-utils.js",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/test-samples/interactiveArea.html",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/test-unit/helloworld_spec.js",
+		"/Users/kailian/Documents/vpaidjs/vpaidjs/test-unit/linear-vpaid-spec.js",
+		"/Users/kailian/Downloads/googleads_ima_html5_samples/advanced/ads.js",
+		"/Users/kailian/Downloads/googleads_ima_html5_samples/advanced/application.js",
+		"/Users/kailian/Downloads/googleads_ima_html5_samples/advanced/index.html",
+		"/Users/kailian/Downloads/googleads_ima_html5_samples/advanced/style.css",
+		"/Users/kailian/Downloads/googleads_ima_html5_samples/advanced/video_player.js",
+		"/Users/kailian/Downloads/googleads_ima_html5_samples/README.md",
+		"/Users/kailian/Documents/tomcat-server/apache-tomcat-7.0.54/webapps/vpaid2demo/yvpaid.js",
+		"/Users/kailian/Downloads/ember-app-kit-master/package.json",
+		"/Users/kailian/Desktop/assignment/prj1/vpaidjs-master/package.json",
+		"/Users/kailian/Desktop/assignment/prj1/vpaidjs-master/Gruntfile.js",
+		"/Users/kailian/Desktop/todo/index.html",
+		"/Users/kailian/Desktop/todo/js/controllers/todo_controller.js",
+		"/Users/kailian/Desktop/todo/js/application.js",
+		"/Users/kailian/Desktop/todo/js/controllers/todos_controller.js",
+		"/Users/kailian/Desktop/todo/js/views/edit_todo_view.js",
+		"/Users/kailian/Desktop/todo/js/router.js",
+		"/Users/kailian/Desktop/todo/style.css",
+		"/Users/kailian/Desktop/todo/js/models/todo.js",
+		"/Users/kailian/Desktop/ember/starter-kit-1.5.1/index.html",
+		"/Users/kailian/Desktop/ember/starter-kit-1.5.1/js/app.js",
+		"/Users/kailian/Desktop/ember/starter-kit-1.5.1/js/libs/ember-1.5.1.js",
+		"/Users/kailian/Desktop/ember/starter-kit-1.5.1/css/style.css",
+		"/Users/kailian/Library/Application Support/Sublime Text 3/Packages/Default/Preferences.sublime-settings",
+		"/Users/kailian/Library/Application Support/Sublime Text 3/Packages/User/Preferences.sublime-settings",
+		"/Users/kailian/Library/Application Support/Sublime Text 3/Packages/Default/Default (OSX).sublime-keymap"
+	],
+	"find":
+	{
+		"height": 35.0
+	},
+	"find_in_files":
+	{
+		"height": 93.0,
+		"where_history":
+		[
+			""
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"square",
+			"slot",
+			"var canvas = document.createElement('canvas');\n    // canvas.id='canvas';\n    // canvas.tabIndex = 1;\n    // canvas.height = 60;\n    // canvas.width = 60;\n    ",
+			"_videoSlot",
+			"showInteractiveAd",
+			"adloaded",
+			"CALLBACK",
+			"clickthrough",
+			"interactiveParentDiv",
+			"_inviteImg",
+			"_interactiveAdDiv",
+			"append",
+			"child",
+			"adelement",
+			"obj",
+			"_interactiveAdDiv",
+			"_interactiveParentDiv",
+			"registerForViewabilityChecks",
+			"mediafiles",
+			"YnY9MS4wLjAmYnM9KDE3djhrZjNnZihnaWQkaENPYjV6azRMakhyRWpMeVV4Llhqd1JkTVRBdU4xTmlrcFhfazBHWSxzdCQxMzk4OTY4OTgxNjEyNTcwLHNpJDEzMjkxMDUxLHNwJDk3MjczMDA0NSxjciQ0MDE5NTc4NTUxLHYkMi4wLGFpZCRNaWVpV1dLTGM2SS0sY3QkMjUseWJ4JDV1RUtxWG1XeTIyX1ZjV2lvYXVYdVEsYmkkMjEwMjM5MjU1MSxtbWUkODg2NzA5NTQ5MzUxMDk1MTAwOCxyJDAsaWQkT1ZFUkxBWSxyZCQxMTdnbHRrYW4seW9vJDEsYWdwJDMyMDk3NjgwNTEsYXAkVklEKSk",
+			"debug",
+			"javascript",
+			"vtc",
+			"xml",
+			"vtc",
+			"communicator",
+			"vtc",
+			"server",
+			"vpaid-test",
+			"vpaid-test-communicator",
+			"vpaid-test",
+			"communicatorSpec",
+			" \n",
+			"		\n",
+			"bind",
+			"onClick",
+			"playpause",
+			"private",
+			"outlet",
+			"filters",
+			"filter",
+			"todos",
+			"item",
+			"iscompleted",
+			"moment",
+			"format",
+			"format-",
+			"li",
+			"posts",
+			"post",
+			"auto_ma",
+			"bracket",
+			"loading"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"folders":
+	[
+		{
+			"follow_symlinks": true,
+			"path": "/Users/kailian/Downloads/square-v1.3"
+		}
+	],
+	"groups":
+	[
+		{
+			"selected": 3,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/Users/kailian/Downloads/square-v1.3/square/client/views/header.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 13647,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								8709,
+								8715
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"is_xml": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2967.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/Users/kailian/Downloads/square-v1.3/square/client/views/nav.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6316,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								99,
+								100
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"is_xml": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/Users/kailian/Downloads/square-v1.3/square/client/views/dashboard.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6322,
+						"regions":
+						{
+							"TagLint":
+							{
+								"flags": 2356,
+								"icon": "dot",
+								"regions":
+								[
+									[
+										6237,
+										6239
+									]
+								],
+								"scope": "variable.parameter"
+							}
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"is_xml": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/Users/kailian/Downloads/square-v1.3/square/client/index.html",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 6028,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1001,
+								1002
+							]
+						],
+						"settings":
+						{
+							"BracketHighlighterBusy": false,
+							"bh_regions":
+							[
+								"bh_angle",
+								"bh_angle_center",
+								"bh_angle_open",
+								"bh_angle_close",
+								"bh_default",
+								"bh_default_center",
+								"bh_default_open",
+								"bh_default_close",
+								"bh_double_quote",
+								"bh_double_quote_center",
+								"bh_double_quote_open",
+								"bh_double_quote_close",
+								"bh_round",
+								"bh_round_center",
+								"bh_round_open",
+								"bh_round_close",
+								"bh_c_define",
+								"bh_c_define_center",
+								"bh_c_define_open",
+								"bh_c_define_close",
+								"bh_square",
+								"bh_square_center",
+								"bh_square_open",
+								"bh_square_close",
+								"bh_curly",
+								"bh_curly_center",
+								"bh_curly_open",
+								"bh_curly_close",
+								"bh_single_quote",
+								"bh_single_quote_center",
+								"bh_single_quote_open",
+								"bh_single_quote_close",
+								"bh_regex",
+								"bh_regex_center",
+								"bh_regex_open",
+								"bh_regex_close",
+								"bh_unmatched",
+								"bh_unmatched_center",
+								"bh_unmatched_open",
+								"bh_unmatched_close",
+								"bh_tag",
+								"bh_tag_center",
+								"bh_tag_open",
+								"bh_tag_close"
+							],
+							"is_xml": false,
+							"syntax": "Packages/Djaneiro/Syntaxes/HTML (Django).tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"project": "",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"selected_items":
+		[
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 142.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}
