@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load mathfilters %}
+{% load append_to_get %}
 
 {% block meta %}
     <title>使用情况</title>
@@ -18,12 +19,12 @@
 
 {% block content %}
     <div class="container">
-        <a href="/usage-report/">最近三个月情况</a>
-        <a href="/usage-report/?dimension=month">按月查询</a>
-        <a href="/usage-report/?dimension=day">按日查询</a>
+        <a href="{{ request.path }}">最近三个月情况</a>
+        <a href="{{ request.path }}?dimension=month">按月查询</a>
+        <a href="{{ request.path }}?dimension=day">按日查询</a>
     </div>
     <div class="container bs-docs-container top-container">
-     {% if daily_usage_list %}
+     {% if daily_list %}
         <div class="container">
             <label for="from">起始日期</label>
             <input type="text" id="from" name="from">
@@ -36,13 +37,13 @@
         <table class="table table-bordered">
 
         <tr>
-            <th>使用时间</th>
+            <th>时间</th>
             <th>part no</th>
             <th>item no</th>
             <th>size no</th>
-            <th>使用数量</th>
+            <th>数量</th>
         </tr>
-        {% for usage in daily_usage_list %}
+        {% for usage in daily_list %}
         <tr>
             <td>{{ usage.date | date:"Y年m月d日"}}</td>
             <td>{{ usage.OTItem.part_no}}</td>
@@ -52,10 +53,24 @@
         </tr>
         {% endfor %}
         </table>
+        <div class="pagination">
+              <span class="step-links">
+             {% if daily_list.has_previous %}
+             <a href="{% append_to_get page=daily_list.previous_page_number %}">previous</a>
+             {% endif %}
 
+             <span class="current">
+                Page {{ daily_list.number }} of {{ daily_list.paginator.num_pages }}.
+             </span>
+
+            {% if daily_list.has_next %}
+            <a href="{% append_to_get page=daily_list.next_page_number %}">next</a>
+            {% endif %}
+            </span>
+        </div>
      {% endif %}
 
-      {% if monthly_usage_list %}
+      {% if monthly_list %}
         <div class="container">
             <label for="from">起始日期</label>
             <input type="text" id="from" name="from">
@@ -73,7 +88,7 @@
             <th>size no</th>
             <th>使用数量</th>
         </tr>
-        {% for usage in monthly_usage_list %}
+        {% for usage in monthly_list %}
         <tr>
             <td>{{ usage.date | date:"Y年m月"}}</td>
             <td>{{ usage.OTItem.part_no}}</td>
@@ -83,10 +98,24 @@
         </tr>
         {% endfor %}
         </table>
+        <div class="pagination">
+             <span class="step-links">
+             {% if monthly_list.has_previous %}
+             <a href="{% append_to_get page=monthly_list.previous_page_number %}">previous</a>
+             {% endif %}
 
+             <span class="current">
+                Page {{ monthly_list.number }} of {{ monthly_list.paginator.num_pages }}.
+             </span>
+
+            {% if monthly_list.has_next %}
+            <a href="{% append_to_get page=monthly_list.next_page_number %}">next</a>
+            {% endif %}
+            </span>
+        </div>
      {% endif %}
 
-     {% if summary_usage_list %}
+     {% if summary_list %}
         <table class="table table-bordered">
         <tr>
             <th>part no</th>
@@ -96,7 +125,7 @@
             <th>{{second_month}}</th>
             <th>{{current_month}}</th>
         </tr>
-        {% for usage in summary_usage_list %}
+        {% for usage in summary_list %}
         <tr>
             <td>{{ usage.part_no}}</td>
             <td>{{ usage.item_no}}</td>

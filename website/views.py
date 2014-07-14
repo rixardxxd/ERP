@@ -1,16 +1,8 @@
 # -*- coding: utf-8 -*-
 # coding=gbk1
-from django.shortcuts import render
-from django.shortcuts import render_to_response
-from django.shortcuts import RequestContext
-from django.shortcuts import HttpResponseRedirect
-from django.core.urlresolvers import reverse
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from models import OTItem,  OTItemStorage, OTItemDaily, OTItemMonthly
-from django.db.models import Sum
 
-
-
-from django.http import HttpResponse
 from django.shortcuts import render_to_response, render, HttpResponseRedirect, redirect
 from django.contrib.auth import logout, login
 from django.contrib.auth.models import User
@@ -116,9 +108,19 @@ def usage_report_view(request):
             usage_list = usage_list.filter(date__lte=end_date)
         if part_no is not None:
             usage_list = usage_list.filter(OTItem__part_no__contains=part_no)
-        print usage_list
-        dict = {'daily_usage_list':usage_list}
-        return render_to_response('website/usage-report.html', RequestContext(request, dict))
+
+        paginator = Paginator(usage_list,1)
+        page = request.GET.get('page')
+        try:
+            usages = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            usages = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            usages = paginator.page(paginator.num_pages)
+        dict = {'daily_list':usages}
+        return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
         usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('date')
         if start_date is not None:
@@ -135,9 +137,20 @@ def usage_report_view(request):
             usage_list = usage_list.filter(date__lte=end_date)
         if part_no is not None:
             usage_list = usage_list.filter(OTItem__part_no__contains=part_no)
-        print usage_list
-        dict = {'monthly_usage_list':usage_list}
-        return render_to_response('website/usage-report.html', RequestContext(request, dict))
+
+        paginator = Paginator(usage_list,1)
+        page = request.GET.get('page')
+        try:
+            usages = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            usages = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            usages = paginator.page(paginator.num_pages)
+
+        dict = {'monthly_list':usages}
+        return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
@@ -146,24 +159,166 @@ def usage_report_view(request):
         print params
         result = get_sql_data_params(Sql.monthly_usage_sql,params)
 
-        dict = {'summary_usage_list': result,
+        dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月")}
-        return render_to_response('website/usage-report.html', RequestContext(request, dict))
+        return render_to_response('website/report.html', RequestContext(request, dict))
 
 @login_required
 def return_report_view(request):
-    return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('date')
-    print return_list
-    dict = {'return_list':return_list}
-    return render_to_response('website/return-report.html', RequestContext(request, dict))
+    p = request.GET.get('dimension')
+    start_date = request.GET.get('startDate');
+    end_date = request.GET.get('endDate');
+    part_no = request.GET.get('part-no');
+
+    print start_date,end_date,part_no
+
+    if p == 'day':
+        return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('date')
+        if start_date is not None:
+            tmp = datetime.strptime(start_date,'%m/%d/%Y')
+            start_date = tmp.strftime('%Y-%m-%d')
+            return_list = return_list.filter(date__gte=start_date)
+        if end_date is not None:
+            tmp = datetime.strptime(end_date,'%m/%d/%Y')
+            end_date = tmp.strftime('%Y-%m-%d')
+            return_list = return_list.filter(date__lte=end_date)
+        if part_no is not None:
+            return_list = return_list.filter(OTItem__part_no__contains=part_no)
+
+        paginator = Paginator(return_list,1)
+        page = request.GET.get('page')
+        try:
+            returns = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            returns = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            returns = paginator.page(paginator.num_pages)
+        dict = {'daily_list':returns}
+        return render_to_response('website/report.html', RequestContext(request, dict))
+    elif p == 'month':
+        return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('date')
+        if start_date is not None:
+            tmp = datetime.strptime(start_date,'%m/%d/%Y')
+            tmp = tmp.replace(day=1)
+            start_date = tmp.strftime('%Y-%m-%d')
+            print start_date
+            return_list = return_list.filter(date__gte=start_date)
+        if end_date is not None:
+            tmp = datetime.strptime(end_date,'%m/%d/%Y')
+            tmp = tmp.replace(day=1)
+            end_date = tmp.strftime('%Y-%m-%d')
+            print end_date
+            return_list = return_list.filter(date__lte=end_date)
+        if part_no is not None:
+            return_list = return_list.filter(OTItem__part_no__contains=part_no)
+
+        paginator = Paginator(return_list,1)
+        page = request.GET.get('page')
+        try:
+            returns = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            returns = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            returns = paginator.page(paginator.num_pages)
+        dict = {'monthly_list':returns}
+        return render_to_response('website/report.html', RequestContext(request, dict))
+    else :
+        first_day_of_current_month = date.today().replace(day=1)
+        first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
+        first_day_of_third_month = first_day_of_current_month - relativedelta(months=2)
+        params = [first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
+        print params
+        result = get_sql_data_params(Sql.monthly_return_sql,params)
+
+        dict = {'summary_list': result,
+            'current_month':first_day_of_current_month.strftime("%Y年%m月"),
+            'second_month':first_day_of_second_month.strftime("%Y年%m月"),
+            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+        return render_to_response('website/report.html', RequestContext(request, dict))
+
 @login_required
 def delivery_report_view(request):
-    delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('date')
-    print delivery_list.query
-    dict = {'delivery_list':delivery_list}
-    return render_to_response('website/delivery-report.html', RequestContext(request, dict))
+    p = request.GET.get('dimension')
+    start_date = request.GET.get('startDate');
+    end_date = request.GET.get('endDate');
+    part_no = request.GET.get('part-no');
+
+    print start_date,end_date,part_no
+
+    if p == 'day':
+        delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('date')
+        if start_date is not None:
+            tmp = datetime.strptime(start_date,'%m/%d/%Y')
+            start_date = tmp.strftime('%Y-%m-%d')
+            delivery_list = delivery_list.filter(date__gte=start_date)
+        if end_date is not None:
+            tmp = datetime.strptime(end_date,'%m/%d/%Y')
+            end_date = tmp.strftime('%Y-%m-%d')
+            delivery_list = delivery_list.filter(date__lte=end_date)
+        if part_no is not None:
+            delivery_list = delivery_list.filter(OTItem__part_no__contains=part_no)
+
+        paginator = Paginator(delivery_list,1)
+        page = request.GET.get('page')
+        try:
+            deliveries = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            deliveries = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            deliveries = paginator.page(paginator.num_pages)
+        dict = {'daily_list':deliveries}
+        return render_to_response('website/report.html', RequestContext(request, dict))
+    elif p == 'month':
+        delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('date')
+        if start_date is not None:
+            tmp = datetime.strptime(start_date,'%m/%d/%Y')
+            tmp = tmp.replace(day=1)
+            start_date = tmp.strftime('%Y-%m-%d')
+            print start_date
+            delivery_list = delivery_list.filter(date__gte=start_date)
+        if end_date is not None:
+            tmp = datetime.strptime(end_date,'%m/%d/%Y')
+            tmp = tmp.replace(day=1)
+            end_date = tmp.strftime('%Y-%m-%d')
+            print end_date
+            delivery_list = delivery_list.filter(date__lte=end_date)
+        if part_no is not None:
+            delivery_list = delivery_list.filter(OTItem__part_no__contains=part_no)
+
+        paginator = Paginator(delivery_list,1)
+        page = request.GET.get('page')
+        try:
+            deliveries = paginator.page(page)
+        except PageNotAnInteger:
+            # If page is not an integer, deliver first page.
+            deliveries = paginator.page(1)
+        except EmptyPage:
+        # If page is out of range (e.g. 9999), deliver last page of results.
+            deliveries = paginator.page(paginator.num_pages)
+        dict = {'monthly_list':deliveries}
+        return render_to_response('website/report.html', RequestContext(request, dict))
+    else :
+        first_day_of_current_month = date.today().replace(day=1)
+        first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
+        first_day_of_third_month = first_day_of_current_month - relativedelta(months=2)
+        params = [first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
+        print params
+        result = get_sql_data_params(Sql.monthly_delivery_sql,params)
+
+        dict = {'summary_list': result,
+            'current_month':first_day_of_current_month.strftime("%Y年%m月"),
+            'second_month':first_day_of_second_month.strftime("%Y年%m月"),
+            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+        return render_to_response('website/report.html', RequestContext(request, dict))
+
 @login_required
 def summary_report_view(request):
 

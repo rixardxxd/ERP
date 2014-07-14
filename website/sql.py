@@ -10,3 +10,13 @@ class Sql:
                         " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'U' group by \"OTItem_id\" ) b on (a.id = b.\"OTItem_id\")" \
                         " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'U' group by \"OTItem_id\" ) c on (a.id = c.\"OTItem_id\")" \
                         " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'U' group by \"OTItem_id\" ) d on (a.id = d.\"OTItem_id\")";
+    monthly_return_sql = "select a.part_no, item_no,a.size as size, coalesce(b.sum,0) as current_month_sum,coalesce(c.sum,0) as second_month_sum,coalesce(d.sum,0) as third_month_sum from website_otitem a" \
+                        " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'R' group by \"OTItem_id\" ) b on (a.id = b.\"OTItem_id\")" \
+                        " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'R' group by \"OTItem_id\" ) c on (a.id = c.\"OTItem_id\")" \
+                        " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'R' group by \"OTItem_id\" ) d on (a.id = d.\"OTItem_id\")";
+
+    monthly_delivery_sql = "select a.part_no, item_no,a.size as size, coalesce(b.sum,0) as current_month_sum,coalesce(c.sum,0) as second_month_sum,coalesce(d.sum,0) as third_month_sum from website_otitem a" \
+                        " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'D' group by \"OTItem_id\" ) b on (a.id = b.\"OTItem_id\")" \
+                        " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'D' group by \"OTItem_id\" ) c on (a.id = c.\"OTItem_id\")" \
+                        " left join (select \"OTItem_id\",sum(amount) from website_otitemmonthly where date = %s and type = 'D' group by \"OTItem_id\" ) d on (a.id = d.\"OTItem_id\")";
+
