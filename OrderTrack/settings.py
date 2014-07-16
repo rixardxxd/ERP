@@ -58,19 +58,6 @@ ROOT_URLCONF = 'OrderTrack.urls'
 WSGI_APPLICATION = 'OrderTrack.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/1.6/ref/settings/#databases
-
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'order',
-		'USER': 'xxd',
-		'PASSWORD': '',
-		'HOST': 'localhost',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-		'PORT': '5432',
-    }
-}
 
 
 # Internationalization
@@ -117,3 +104,31 @@ TEMPLATE_CONTEXT_PROCESSORS = TCP + (
     'django.core.context_processors.request',
 )
 
+
+
+from os import environ
+from urlparse import urlparse
+
+if environ.has_key('HEROKU_POSTGRESQL_JADE_URL'):
+    url = urlparse(environ['HEROKU_POSTGRESQL_JADE_URL'])
+    DATABASES = {
+        'default':{
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': url.path[1:],
+            'USER': url.username,
+            'PASSWORD': url.password,
+            'HOST': url.hostname,
+            'PORT': url.port,
+        }
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+            'NAME': 'order',
+            'USER': 'xxd',
+            'PASSWORD': '',
+            'HOST': 'localhost',  # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': '5432',
+        }
+    }
