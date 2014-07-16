@@ -109,7 +109,7 @@ def usage_report_view(request):
         if part_no is not None:
             usage_list = usage_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(usage_list,1)
+        paginator = Paginator(usage_list,50)
         page = request.GET.get('page')
         try:
             usages = paginator.page(page)
@@ -138,7 +138,7 @@ def usage_report_view(request):
         if part_no is not None:
             usage_list = usage_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(usage_list,1)
+        paginator = Paginator(usage_list,50)
         page = request.GET.get('page')
         try:
             usages = paginator.page(page)
@@ -187,7 +187,7 @@ def return_report_view(request):
         if part_no is not None:
             return_list = return_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(return_list,1)
+        paginator = Paginator(return_list,50)
         page = request.GET.get('page')
         try:
             returns = paginator.page(page)
@@ -216,7 +216,7 @@ def return_report_view(request):
         if part_no is not None:
             return_list = return_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(return_list,1)
+        paginator = Paginator(return_list,50)
         page = request.GET.get('page')
         try:
             returns = paginator.page(page)
@@ -293,7 +293,7 @@ def delivery_report_view(request):
         if part_no is not None:
             delivery_list = delivery_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(delivery_list,1)
+        paginator = Paginator(delivery_list,50)
         page = request.GET.get('page')
         try:
             deliveries = paginator.page(page)
