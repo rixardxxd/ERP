@@ -9,11 +9,6 @@
     <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}vendor/datepicker/daterangepicker-bs3.css"/>
 {% endblock %}
 
-{% block angular %}
-    ng-app="Order" ng-controller="controller" ng-init="init()"
-{% endblock %}
-
-
 
 {% block content %}
     <div class="container bs-docs-container top-container">
@@ -21,19 +16,14 @@
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="row report_section">
-
-            <a class="contact" href="#" data-form="/products/" title="Edit">edit</a>
             <!-- Button trigger modal -->
             <div class="col-md-6 col-sm-6">
-                <button class="btn btn-info btn-sm" id="products">请选择货物
+                <button class="btn btn-info btn-sm" id="products" data-toggle="modal" data-target="#myModal">请选择货物
                 </button>
             </div>
             <div class="col-md-6 col-sm-6 align_text_right">
-                <div id="reportrange" class="pull-right"
-                     style="background: #fff; cursor: pointer; padding: 5px 10px; border: 1px solid #ccc">
-                    <i class="glyphicon glyphicon-calendar fa fa-calendar"></i>
-                    <span id="query_window"></span> <b class="caret"></b>
-                </div>
+                 <label for="date">日期</label>
+                 <input type="text" id="date" name="date" readonly='true'>
             </div>
         </div>
         <div class="row dashboard_section_content">
@@ -125,20 +115,20 @@
     <div class="modal hide" id="contactModal"></div>
 
 
-        <!-- Modal -->
+   <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+            <h4 class="modal-title" id="myModalLabel">货物列表</h4>
           </div>
           <div class="modal-body">
             ...
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button type="button" class="btn btn-primary">确认</button>
           </div>
         </div>
       </div>
@@ -155,50 +145,9 @@
     <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/daterangepicker.js"></script>
 
     <script>
-        var uid = {{ user.id }}
-        $(document).ready(function () {
-            //init the default query window
-            var theEndDate = new Date()
-            $("#query_window").text(theEndDate.toLocaleDateString())
-            $('#reportrange').daterangepicker({
-                singleDatePicker: true
-            });
-
-            //listen for calender changes
-            $('#reportrange').on('apply.daterangepicker', function (ev, picker) {
-                console.log(picker.startDate.format('MM/DD/YYYY'));
-                console.log(picker.endDate.format('MM/DD/YYYY'));
-                $("#query_window").text(picker.startDate.format('MM/DD/YYYY'));
-                var s = new Date(picker.startDate.format('MM/DD/YYYY'))
-                var t = new Date(picker.endDate.format('MM/DD/YYYY'))
-                angular_bridge_updateQuery(s, t, unit);
-            });
-
-            //trigger detection
-            if (need_detection > 0){
-                detectionIP();
-            }
-        });
-
-        //delegate to angular calls
-        function angular_bridge_updateQuery(startDate, endDate) {
-            var scope = angular.element($("#query_panel")).scope();
-            scope.$apply(function () {
-                scope.queryRecords(startDate, endDate)
-            })
-        }
-
-
-        $(".contact").click(function(ev) { // for each edit contact url
-            ev.preventDefault(); // prevent navigation
-            var url = $(this).data("form"); // get the contact form url
-            $("#contactModal").load(url, function() { // load the url into the modal
-                $(this).modal('show'); // display the modal on url load
-            });
-            return false; // prevent the click propagation
-        });
-
-
+    $(function() {
+        $("#date" ).datepicker({maxDate: "+1D" });
+    });
 
     </script>
 
