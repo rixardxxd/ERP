@@ -34,7 +34,7 @@
             <input type="text" id="part-no" name="part-no">
             <button class="btn btn-info btn-sm" id="query">查询</button>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-hover">
 
         <tr>
             <th>时间</th>
@@ -80,7 +80,7 @@
             <input type="text" id="part-no" name="part-no">
             <button class="btn btn-info btn-sm" id="query">查询</button>
         </div>
-        <table class="table table-bordered">
+        <table class="table table-hover">
         <tr>
             <th>使用月份</th>
             <th>part no</th>
@@ -116,7 +116,7 @@
      {% endif %}
 
      {% if summary_list %}
-        <table class="table table-bordered">
+        <table class="table table-hover">
         <tr>
             <th>part no</th>
             <th>item no</th>
@@ -145,7 +145,7 @@
 
 {% block javascript %}
  <script>
-      $(function() {
+      $(document).ready(function () {
         $.datepicker.setDefaults($.datepicker.regional['zh-TW']);
         $( "#from" ).datepicker({
           defaultDate: "+1w",
