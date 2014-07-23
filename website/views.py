@@ -338,8 +338,9 @@ def summary_report_view(request):
 
 @login_required
 def products_view(request):
-    products_list = OTItem.objects.all()
+    products_list = OTItem.objects.all().order_by('part_no')
     dict = {'products_list':products_list}
+    print products_list
     return render_to_response('website/products.html', RequestContext(request, dict))
 
 
