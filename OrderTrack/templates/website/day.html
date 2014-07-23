@@ -21,8 +21,12 @@
     <div class="row">
     <div class="col-md-8 col-md-offset-2">
         <div class="row report_section">
+
+            <a class="contact" href="#" data-form="/products/" title="Edit">edit</a>
+            <!-- Button trigger modal -->
             <div class="col-md-6 col-sm-6">
-                <button type="button" class="btn btn-primary">货物</button>
+                <button class="btn btn-info btn-sm" id="products">请选择货物
+                </button>
             </div>
             <div class="col-md-6 col-sm-6 align_text_right">
                 <div id="reportrange" class="pull-right"
@@ -116,16 +120,36 @@
     </div>
     </div>
     </div>
+
+
+    <div class="modal hide" id="contactModal"></div>
+
+
+        <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button>
+          </div>
+        </div>
+      </div>
+    </div>
 {% endblock %}
-
+  {$ $}
 {% block javascript %}
-    <script src="{{ STATIC_URL }}angular/app/lib/angular/angular.min.js"></script>
-    <script src="{{ STATIC_URL }}angular/app/lib/angular/angular-resource.min.js"></script>
-    <script src="{{ STATIC_URL }}angular/app/lib/angular/angular-cookies.min.js"></script>
-
-    <script src="{{ STATIC_URL }}angular/app/js/app.js"></script>
-    <script src="{{ STATIC_URL }}angular/app/js/controllers.js"></script>
-    <script src="{{ STATIC_URL }}angular/app/js/services.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/lib/angular.min.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/js/app.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/js/controller.js"></script>
+    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/js/services.js"></script>
 
     <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/moment.min.js"></script>
     <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/daterangepicker.js"></script>
@@ -163,6 +187,18 @@
                 scope.queryRecords(startDate, endDate)
             })
         }
+
+
+        $(".contact").click(function(ev) { // for each edit contact url
+            ev.preventDefault(); // prevent navigation
+            var url = $(this).data("form"); // get the contact form url
+            $("#contactModal").load(url, function() { // load the url into the modal
+                $(this).modal('show'); // display the modal on url load
+            });
+            return false; // prevent the click propagation
+        });
+
+
 
     </script>
 
