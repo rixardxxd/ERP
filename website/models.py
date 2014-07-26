@@ -16,14 +16,14 @@ class Consignment(models.Model):
 
     id = models.AutoField(primary_key=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    amount = models.PositiveIntegerField(default=0)
+    amount = models.PositiveIntegerField(default=0,verbose_name="Quantity")
     OTItem = models.ForeignKey('OTItem', help_text='reference to OTItem')
 
     objects = models.Manager()
 
     def __unicode__(self):
         date = defaultfilters.date(self.create_time,"SHORT_DATETIME_FORMAT")
-        return u'date:{} amount:{} OTItem:{}'.format(date,self.amount,self.OTItem)
+        return u'Date:{} ____ Quantity:{} ____ Item:{}'.format(date,self.amount,self.OTItem)
 
 
 
@@ -46,10 +46,9 @@ class OTItem(models.Model):
     '''
     id = models.AutoField(primary_key=True)
     part_no = models.CharField(max_length=100,unique=True)
-    item_no = models.CharField(max_length=100,unique=True)
     size = models.CharField(max_length=100,null=True)
     di_standard = models.ForeignKey('OTDIStandard')
-    consignment_amount = models.PositiveIntegerField(default=0)
+    consignment_amount = models.PositiveIntegerField(default=0,verbose_name="consignment Quantity")
     desc = models.CharField(max_length=255, null=True, blank=True, help_text='Description of the item')
 
     #use for store the old value of consignment
@@ -58,11 +57,10 @@ class OTItem(models.Model):
     objects = models.Manager()
 
     class Meta:
-        unique_together = ("part_no", "item_no","size","di_standard")
         verbose_name = "货物列表"
 
     def __unicode__(self):
-        return u'part_no: {} item_no: {} size: {} di_standard: {}'.format(self.part_no, self.item_no, self.size, self.di_standard)
+        return u'Id: %-8s ____ Part No: %-8s ____ Size: %-8s ____ Di Standard: %-8s' % (self.id, self.part_no, self.size, self.di_standard)
     def __init__(self, *args, **kwargs):
         super(OTItem, self).__init__(*args,**kwargs)
         self.old_consignment_amount = self.consignment_amount
@@ -76,21 +74,6 @@ class OTItem(models.Model):
             consignment.save()
         self.old_consignment_amount = self.consignment_amount
 
-
-class OTItemStorage(models.Model):
-    '''
-    Track the total quantity of each item in storage
-    '''
-    id = models.AutoField(primary_key=True)
-    item = models.ForeignKey('OTItem', help_text='reference to OTItem')
-    total_count = models.IntegerField(default=0)
-
-    objects = models.Manager()
-
-    class Meta:
-        verbose_name = "库存列表"
-    def __unicode__(self):
-        return u'{} {}'.format(self.item, self.total_count)
 
 
 class OTItemDaily(models.Model):
@@ -107,7 +90,8 @@ class OTItemDaily(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     date = models.DateField(help_text='记录日期')
     OTItem = models.ForeignKey('OTItem')
-    amount = models.PositiveIntegerField(default=0,help_text='数量需为正')
+    amount = models.PositiveIntegerField(default=0,help_text='数量需为正',verbose_name="Quantity")
+    lot_no = models.CharField(max_length=100,null=True,default='0')
     type = models.CharField(max_length=1,choices=TYPE)
     old_amount = 0
     objects = models.Manager()
@@ -120,7 +104,7 @@ class OTItemDaily(models.Model):
         self.old_amount = self.amount
         print u'init: {}'.format(self.old_amount)
     def __unicode__(self):
-        return u'date: {} item: {} amout: {} type: {}'.format(self.date, self.OTItem, self.amount, self.type)
+        return u'Date: {} ____ Item: {} ____ Quantity: {} ____ Type: {} ____ Lot No: {}'.format(self.date, self.OTItem, self.amount, self.type, self.lot_no)
 
     def save(self,*args, **kwargs):
         super(OTItemDaily, self).save(*args, **kwargs)
@@ -157,7 +141,7 @@ class OTItemMonthly(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     date = models.DateField(help_text='只能为每月的第一天')
     OTItem = models.ForeignKey('OTItem')
-    amount = models.PositiveIntegerField(default=0,help_text='数量需为正')
+    amount = models.PositiveIntegerField(default=0,help_text='数量需为正',verbose_name="Quantity")
     type = models.CharField(max_length=1,choices=TYPE)
     objects = models.Manager()
 
@@ -166,7 +150,7 @@ class OTItemMonthly(models.Model):
         verbose_name = '退货、发货、使用-月总表'
 
     def __unicode__(self):
-        return u'month: {} item: {} amout: {} type: {}'.format(self.date, self.OTItem, self.amount, self.type)
+        return u'Month: {} ____ Item: {} ____ Quantity: {} ____ Type: {}'.format(self.date, self.OTItem, self.amount, self.type)
 
 
 

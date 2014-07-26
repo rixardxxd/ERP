@@ -1,21 +1,35 @@
 <div class="container" style="width:800px;height:700px;overflow:auto">
-    <table class="table table-hover table-condensed" width="100px">
-
-            <tr>
-                <th>part no</th>
-                <th>item no</th>
-                <th>size</th>
-                <th>DI标准</th>
-                <th>寄卖数量</th>
-            </tr>
-            {% for product in products_list %}
-            <tr>
-                <td class="col-md-2">{{ product.part_no }}</td>
-                <td class="col-md-2">{{ product.item_no}}</td>
-                <td class="col-md-2">{{ product.size}}</td>
-                <td class="col-md-2">{{ product.OTDIStandard.name}}</td>
-                <td class="col-md-2">{{ product.consignment_amount }}</td>
-            </tr>
-            {% endfor %}
+    <table class="table table-condensed" id="products-table">
+            <thead>
+                <tr>
+                    <th>part no</th>
+                    <th>size</th>
+                    <th>DI标准</th>
+                    <th>寄卖数量</th>
+                </tr>
+            <thead>
+            <tbody>
+                {% for product in products_list %}
+                <tr>
+                    <td class="part-no">{{ product.part_no }}</td>
+                    <td>{{ product.size}}</td>
+                    <td>{{ product.di_standard}}</td>
+                    <td>{{ product.consignment_amount }}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
     </table>
 </div>
+
+<script>
+    $(document).ready(function () {
+
+        $("#products-table > tbody > tr").click(function(){
+             $(this).addClass("selected").siblings().removeClass("selected");
+        });
+
+
+
+    });
+
+</script>

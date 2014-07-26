@@ -1217,6 +1217,10 @@ span.important {
   height: auto;
 }
 
-.select {
+.selected {
  background : grey;
+}
+
+tr.selected {
+    background-color: #FFCF8B
 }

@@ -38,17 +38,19 @@
 
         <tr>
             <th>时间</th>
-            <th>part no</th>
-            <th>item no</th>
-            <th>size no</th>
+            <th>Part No</th>
+            <th>Size</th>
+            <th>DI标准</th>
+            <th>Lot No</th>
             <th>数量</th>
         </tr>
         {% for usage in daily_list %}
         <tr>
             <td>{{ usage.date | date:"Y年m月d日"}}</td>
             <td>{{ usage.OTItem.part_no}}</td>
-            <td>{{ usage.OTItem.item_no}}</td>
             <td>{{ usage.OTItem.size}}</td>
+            <td>{{ usage.OTItem.di_standard}}</td>
+            <td>{{ usage.lot_no}}</td>
             <td>{{ usage.amount | abs }}</td>
         </tr>
         {% endfor %}
@@ -83,17 +85,17 @@
         <table class="table table-hover">
         <tr>
             <th>使用月份</th>
-            <th>part no</th>
-            <th>item no</th>
-            <th>size no</th>
+            <th>Part No</th>
+            <th>Size</th>
+            <th>DI标准</th>
             <th>使用数量</th>
         </tr>
         {% for usage in monthly_list %}
         <tr>
             <td>{{ usage.date | date:"Y年m月"}}</td>
             <td>{{ usage.OTItem.part_no}}</td>
-            <td>{{ usage.OTItem.item_no}}</td>
             <td>{{ usage.OTItem.size}}</td>
+            <td>{{ usage.OTItem.di_standard}}</td>
             <td>{{ usage.amount | abs }}</td>
         </tr>
         {% endfor %}
@@ -118,9 +120,9 @@
      {% if summary_list %}
         <table class="table table-hover">
         <tr>
-            <th>part no</th>
-            <th>item no</th>
-            <th>size</th>
+            <th>Part No</th>
+            <th>Size</th>
+            <th>DI标准</th>
             <th>{{third_month}}</th>
             <th>{{second_month}}</th>
             <th>{{current_month}}</th>
@@ -128,8 +130,8 @@
         {% for usage in summary_list %}
         <tr>
             <td>{{ usage.part_no}}</td>
-            <td>{{ usage.item_no}}</td>
             <td>{{ usage.size}}</td>
+            <td>{{ usage.di_standard}}</td>
             <td>{{ usage.third_month_sum | abs }}</td>
             <td>{{ usage.second_month_sum | abs }}</td>
             <td>{{ usage.current_month_sum | abs }}</td>

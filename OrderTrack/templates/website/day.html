@@ -18,6 +18,8 @@
         <div class="row report_section">
             <!-- Button trigger modal -->
             <div class="col-md-6 col-sm-6">
+                <label for="part-no">Part No.</label>
+                <input type="text" id="part-no" name="part-no" readonly='true'>
                 <button class="btn btn-info btn-sm" id="products">请选择货物
                 </button>
 
@@ -126,7 +128,7 @@
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button type="button" class="btn btn-primary">确认</button>
+            <button id="save-modal" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
           </div>
         </div>
       </div>
@@ -149,10 +151,23 @@
     $(document).ready(function () {
         $("#date" ).datepicker({maxDate: "+1D" });
 
-        $('#products').click(function(){
+        $('#part-no').click(function(){
             $('.modal-body').load('/products/',function(result){
                 $('#myModal').modal({show:true});
             });
+        });
+
+        var modal = $('#myModal');
+
+        // Filter clicks within the modal to those on the save button (#submit-modal)
+        modal.on('click', '#save-modal', function(e) {
+
+            $(".selected").each(function(index, value) {
+                var part_no = $(this).find(".part-no").text();
+                console.log(part_no);
+                if (part_no.length) $('#part-no').val(part_no);
+            });
+
         });
 
     });

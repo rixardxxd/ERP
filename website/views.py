@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 # coding=gbk1
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from models import OTItem,  OTItemStorage, OTItemDaily, OTItemMonthly
+from models import OTItem, OTItemDaily, OTItemMonthly
 
 from django.shortcuts import render_to_response, render, HttpResponseRedirect, redirect
 from django.contrib.auth import logout, login
-from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 from django.template import RequestContext
 from django.forms.models import model_to_dict
@@ -26,7 +25,7 @@ from rest_framework.decorators import api_view
 import logging
 logger = logging.getLogger(__name__)
 
-
+from serializers import OTItemDailySerializer
 
 def main_view(request):
     user = request.user
@@ -338,7 +337,7 @@ def summary_report_view(request):
 
 @login_required
 def products_view(request):
-    products_list = OTItem.objects.all().order_by('part_no')
+    products_list = OTItem.objects.select_related('OTDIStandard').order_by('part_no')
     dict = {'products_list':products_list}
     print products_list
     return render_to_response('website/products.html', RequestContext(request, dict))
@@ -438,5 +437,16 @@ def remove_handler(request, oid):
     else:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
-
-
+@api_view(['GET'])
+def get_handler(request):
+    print request.GET
+    date = request.GET.get('date');
+    part_no = request.GET.get('part-no');
+    user = request.user
+    if __is_user_authorized(user) is True:
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
+    if date is None or part_no is None:
+        return Response(status=status.HTTP_400_BAD_REQUEST)
+    records = OTItemDaily.objects.filter(date=date,OTItem__part_no=part_no)
+    serializer = OTItemDailySerializer(records,many=True)
+    return Response(serializer.data)

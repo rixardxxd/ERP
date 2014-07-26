@@ -21,4 +21,5 @@ urlpatterns = patterns('',
     url(r'^rest/item/(?P<oid>[-\d]+)/add/$', views.add_handler, name="add_handler"),
     url(r'^rest/item/(?P<oid>[-\d]+)/update/$', views.update_handler, name="update_handler"),
     url(r'^rest/item/(?P<oid>[-\d]+)remove/$', views.remove_handler, name="remove_handler"),
+    url(r'^rest/item/daily/$', views.get_handler, name="get_handler"),
 )
