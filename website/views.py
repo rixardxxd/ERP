@@ -443,7 +443,7 @@ def get_handler(request):
     date = request.GET.get('date');
     part_no = request.GET.get('part-no');
     user = request.user
-    if __is_user_authorized(user) is True:
+    if __is_user_authorized(user) is False:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     if date is None or part_no is None:
         return Response(status=status.HTTP_400_BAD_REQUEST)

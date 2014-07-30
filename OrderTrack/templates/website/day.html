@@ -32,23 +32,21 @@
         <div class="row dashboard_section_content">
             <div class="col-lg-12 col-sm-12 col-md-12">
                 <div>
-                    <p class="section_title">Item Return</p>
+                    <p class="section_title">退货</p>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr class="header">
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Amount</th>
-                            <th>Operations</th>
+                            <th>Part No</th>
+                            <th>数量</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>#</td>
-                            <td>10</td>
-                            <td>20</td>
+                            <td class="part-no-cell"></td>
+                            <td>0</td>
                             <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
                         </tr>
                         </tbody>
@@ -59,23 +57,21 @@
         <div class="row dashboard_section_content">
             <div class="col-lg-12 col-sm-12 col-md-12">
                 <div>
-                    <p class="section_title">Item Delivered</p>
+                    <p class="section_title">发货</p>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr class="header">
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Amount</th>
-                            <th>Operations</th>
+                            <th>Part No</th>
+                            <th>数量</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>#</td>
-                            <td>10</td>
-                            <td>20</td>
+                            <td class="part-no-cell"></td>
+                            <td>0</td>
                             <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
                         </tr>
                         </tbody>
@@ -86,23 +82,21 @@
         <div class="row dashboard_section_content">
             <div class="col-lg-12 col-sm-12 col-md-12">
                 <div>
-                    <p class="section_title">Item Usage</p>
+                    <p class="section_title">使用</p>
                 </div>
                 <div class="table-responsive">
                     <table class="table table-bordered">
                         <thead>
                         <tr class="header">
-                            <th>#</th>
-                            <th>Item</th>
-                            <th>Amount</th>
-                            <th>Operations</th>
+                            <th>Part No</th>
+                            <th>数量</th>
+                            <th>操作</th>
                         </tr>
                         </thead>
                         <tbody>
                         <tr>
-                            <td>#</td>
-                            <td>10</td>
-                            <td>20</td>
+                            <td class="part-no-cell"></td>
+                            <td>0</td>
                             <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
                         </tr>
                         </tbody>
@@ -159,16 +153,23 @@
 
         var modal = $('#myModal');
 
+
         // Filter clicks within the modal to those on the save button (#submit-modal)
         modal.on('click', '#save-modal', function(e) {
-
+            var placeholder = "";
             $(".selected").each(function(index, value) {
                 var part_no = $(this).find(".part-no").text();
                 console.log(part_no);
-                if (part_no.length) $('#part-no').val(part_no);
+                if (part_no.length) {
+                    $('#part-no').val(part_no);
+                    placeholder = part_no;
+                }
             });
-
+            console.log(placeholder);
+            $('.part-no-cell').html(placeholder);
         });
+
+
 
     });
 
