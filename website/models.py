@@ -5,7 +5,8 @@ from django.forms import ModelForm
 from django.core.exceptions import ValidationError
 from django.template import defaultfilters
 from datetime import date
-
+from django.db.models.signals import pre_delete
+from django.dispatch import receiver
 
 
 class Consignment(models.Model):
@@ -124,7 +125,22 @@ class OTItemDaily(models.Model):
             val = OTItemMonthly(date=first_day_of_month,type=self.type,OTItem=self.OTItem,amount=self.amount)
           val.save()
 
-
+@receiver(pre_delete,sender=OTItemDaily)
+def subtract_from_monthly(sender,**kwargs):
+    obj = kwargs['instance']
+    val = None
+    first_day_of_month = date(obj.date.year,obj.date.month,1)
+    try:
+        val = OTItemMonthly.objects.get(date=first_day_of_month,type=obj.type,OTItem=obj.OTItem)
+        print val
+    except:
+        pass
+    if val is not None:
+        amount = val.amount - obj.amount;
+        if amount < 0:
+            amount = 0
+        val.amount = amount;
+        val.save()
 
 
 class OTItemMonthly(models.Model):
