@@ -18,21 +18,23 @@
 
 
 {% block content %}
-    <div class="container">
-        <a href="{{ request.path }}">最近三个月情况</a>
-        <a href="{{ request.path }}?dimension=month">按月查询</a>
-        <a href="{{ request.path }}?dimension=day">按日查询</a>
-    </div>
-    <div class="container bs-docs-container top-container">
+    <div class="container bs-docs-container">
+        <div class="search-box" >
+           <a href="{{ request.path }}">最近三个月情况</a>
+           <a href="{{ request.path }}?dimension=month">按月查询</a>
+           <a href="{{ request.path }}?dimension=day">按日查询</a>
+        </div>
      {% if daily_list %}
-        <div class="container">
+        <div class="search-box">
             <label for="from">起始日期</label>
             <input type="text" id="from" name="from" readonly='true'>
             <label for="to">终止日期</label>
             <input type="text" id="to" name="to" readonly='true'>
-            <label for="part-no">Part No</label>
-            <input type="text" id="part-no" name="part-no">
-            <button class="btn btn-info btn-sm" id="query">查询</button>
+            <span class="alignment-right">
+                <label for="part-no">Part No</label>
+                <input type="text" id="part-no" name="part-no">
+                <button class="btn btn-info btn-sm" id="query">查询</button>
+            </span>
         </div>
         <table class="table table-hover">
 
@@ -55,7 +57,7 @@
         </tr>
         {% endfor %}
         </table>
-        <div class="pagination">
+        <div class="pagination pagination-alignment-right">
               <span class="step-links">
              {% if daily_list.has_previous %}
              <a href="{% append_to_get page=daily_list.previous_page_number %}">previous</a>
@@ -73,14 +75,16 @@
      {% endif %}
 
       {% if monthly_list %}
-        <div class="container">
+        <div class="search-box">
             <label for="from">起始日期</label>
             <input type="text" id="from" name="from" readonly='true'>
             <label for="to">终止日期</label>
             <input type="text" id="to" name="to" readonly='true'>
+            <span class="alignment-right">
             <label for="part-no">Part No</label>
-            <input type="text" id="part-no" name="part-no">
-            <button class="btn btn-info btn-sm" id="query">查询</button>
+               <input type="text" id="part-no" name="part-no">
+               <button class="btn btn-info btn-sm" id="query">查询</button>
+            </span>
         </div>
         <table class="table table-hover">
         <tr>
@@ -100,7 +104,7 @@
         </tr>
         {% endfor %}
         </table>
-        <div class="pagination">
+        <div class="pagination pagination-alignment-right">
              <span class="step-links">
              {% if monthly_list.has_previous %}
              <a href="{% append_to_get page=monthly_list.previous_page_number %}">previous</a>

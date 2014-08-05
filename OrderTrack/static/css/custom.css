@@ -179,7 +179,7 @@ a.button.blue, button.button.blue, strong.button.blue, div.button.blue {
 }
 
 .top-container {
-    margin-top: 40px;
+    margin-top: 20px;
 }
 
 .callout-copy {
@@ -1223,4 +1223,21 @@ span.important {
 
 tr.selected {
     background-color: #FFCF8B
+}
+
+.container .alignment-right {
+    position:absolute;
+    right:120px;
+    width: 300px;
+}
+
+.container .pagination-alignment-right {
+    position:absolute;
+    right:120px;
+    width: 160px;
+}
+
+.search-box {
+    padding-top:10px;
+    padding-bottom:10px;
 }

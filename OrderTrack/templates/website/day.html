@@ -20,11 +20,10 @@
             <div class="col-md-6 col-sm-6">
                 <label for="part-no">Part No.</label>
                 <input type="text" id="part-no" name="part-no" readonly='true'>
-                <button class="btn btn-info btn-sm" id="products">请选择货物
                 </button>
 
             </div>
-            <div class="col-md-6 col-sm-6 align_text_right">
+            <div class="col-md-6 col-sm-6 text-right">
                  <label for="date">日期</label>
                  <input type="text" id="date" name="date" readonly='true'>
             </div>
@@ -167,6 +166,12 @@
             });
             console.log(placeholder);
             $('.part-no-cell').html(placeholder);
+
+            var url = "/rest/item/daily/?date=" + $("#date").val() + "&part-no=" + placeholder;
+            console.log(url);
+            $.getJSON( url, function( data ) {
+                  console.log(data);
+             });
         });
 
 

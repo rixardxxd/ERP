@@ -441,12 +441,14 @@ def remove_handler(request, oid):
 def get_handler(request):
     print request.GET
     date = request.GET.get('date');
+    tmp = datetime.strptime(date,'%m/%d/%Y')
+    start_date = tmp.strftime('%Y-%m-%d')
     part_no = request.GET.get('part-no');
     user = request.user
     if __is_user_authorized(user) is False:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     if date is None or part_no is None:
         return Response(status=status.HTTP_400_BAD_REQUEST)
-    records = OTItemDaily.objects.filter(date=date,OTItem__part_no=part_no)
+    records = OTItemDaily.objects.filter(date=start_date,OTItem__part_no=part_no)
     serializer = OTItemDailySerializer(records,many=True)
     return Response(serializer.data)

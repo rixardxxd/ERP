@@ -59,6 +59,7 @@ class OTItem(models.Model):
 
     class Meta:
         verbose_name = "货物列表"
+        ordering = ['pk']
 
     def __unicode__(self):
         return u'Id: %-8s ____ Part No: %-8s ____ Size: %-8s ____ Di Standard: %-8s' % (self.id, self.part_no, self.size, self.di_standard)
