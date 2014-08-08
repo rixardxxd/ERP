@@ -63,7 +63,7 @@ class OTItem(models.Model):
         ordering = ['item_no']
 
     def __unicode__(self):
-        return u'item_no: %-8s ____ Part No: %-8s ____ Size: %-8s ____ Di Standard: %-8s' % (self.item_no, self.part_no, self.size, self.di_standard)
+        return u'Item_No: %-8s ____ Part No: %-8s ____ Size: %-8s ____ Di Standard: %-8s' % (self.item_no, self.part_no, self.size, self.di_standard)
     def __init__(self, *args, **kwargs):
         super(OTItem, self).__init__(*args,**kwargs)
         self.old_consignment_amount = self.consignment_amount
