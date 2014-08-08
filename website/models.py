@@ -46,6 +46,7 @@ class OTItem(models.Model):
     Generic entity table for item
     '''
     id = models.AutoField(primary_key=True)
+    item_no = models.CharField(max_length=100,unique=True,null=True)
     part_no = models.CharField(max_length=100,unique=True)
     size = models.CharField(max_length=100,null=True)
     di_standard = models.ForeignKey('OTDIStandard')
@@ -59,10 +60,10 @@ class OTItem(models.Model):
 
     class Meta:
         verbose_name = "货物列表"
-        ordering = ['pk']
+        ordering = ['item_no']
 
     def __unicode__(self):
-        return u'Id: %-8s ____ Part No: %-8s ____ Size: %-8s ____ Di Standard: %-8s' % (self.id, self.part_no, self.size, self.di_standard)
+        return u'item_no: %-8s ____ Part No: %-8s ____ Size: %-8s ____ Di Standard: %-8s' % (self.item_no, self.part_no, self.size, self.di_standard)
     def __init__(self, *args, **kwargs):
         super(OTItem, self).__init__(*args,**kwargs)
         self.old_consignment_amount = self.consignment_amount
