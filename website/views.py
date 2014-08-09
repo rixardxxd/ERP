@@ -92,7 +92,7 @@ def usage_report_view(request):
     start_date = request.GET.get('startDate');
     end_date = request.GET.get('endDate');
     part_no = request.GET.get('part-no');
-
+    export_excel = request.GET.get("export-excel");
     print start_date,end_date,part_no
 
     if p == 'day':
@@ -108,18 +108,27 @@ def usage_report_view(request):
         if part_no is not None:
             usage_list = usage_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(usage_list,50)
-        page = request.GET.get('page')
-        try:
-            usages = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            usages = paginator.page(1)
-        except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-            usages = paginator.page(paginator.num_pages)
-        dict = {'daily_list':usages}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            response = render_to_response("website/daily-spreadsheet.html", {
+                'daily_list': usage_list,
+            })
+            filename = "usage-daily-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else:
+            paginator = Paginator(usage_list,50)
+            page = request.GET.get('page')
+            try:
+                usages = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                usages = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+                usages = paginator.page(paginator.num_pages)
+            dict = {'daily_list':usages}
+            return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
         usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('date')
         if start_date is not None:
@@ -137,19 +146,28 @@ def usage_report_view(request):
         if part_no is not None:
             usage_list = usage_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(usage_list,50)
-        page = request.GET.get('page')
-        try:
-            usages = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            usages = paginator.page(1)
-        except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-            usages = paginator.page(paginator.num_pages)
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            response = render_to_response("website/monthly-spreadsheet.html", {
+                'monthly_list': usage_list,
+            })
+            filename = "usage-monthly-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else:
+            paginator = Paginator(usage_list,50)
+            page = request.GET.get('page')
+            try:
+                usages = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                usages = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+                usages = paginator.page(paginator.num_pages)
 
-        dict = {'monthly_list':usages}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+            dict = {'monthly_list':usages}
+            return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
@@ -158,11 +176,25 @@ def usage_report_view(request):
         print params
         result = get_sql_data_params(Sql.monthly_usage_sql,params)
 
-        dict = {'summary_list': result,
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            for i, val in enumerate(result):
+                str_val = "size: " + val.get("size")
+                val.update({"size":str_val})
+            dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月")}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+            response = render_to_response("website/summary-spreadsheet.html", dict)
+            filename = "usage-summary-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else :
+            dict = {'summary_list': result,
+            'current_month':first_day_of_current_month.strftime("%Y年%m月"),
+            'second_month':first_day_of_second_month.strftime("%Y年%m月"),
+            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+            return render_to_response('website/report.html', RequestContext(request, dict))
 
 @login_required
 def return_report_view(request):
@@ -170,7 +202,7 @@ def return_report_view(request):
     start_date = request.GET.get('startDate');
     end_date = request.GET.get('endDate');
     part_no = request.GET.get('part-no');
-
+    export_excel = request.GET.get("export-excel");
     print start_date,end_date,part_no
 
     if p == 'day':
@@ -186,18 +218,27 @@ def return_report_view(request):
         if part_no is not None:
             return_list = return_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(return_list,50)
-        page = request.GET.get('page')
-        try:
-            returns = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            returns = paginator.page(1)
-        except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-            returns = paginator.page(paginator.num_pages)
-        dict = {'daily_list':returns}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            response = render_to_response("website/daily-spreadsheet.html", {
+                'daily_list': return_list,
+            })
+            filename = "return-daily-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else:
+            paginator = Paginator(return_list,50)
+            page = request.GET.get('page')
+            try:
+                returns = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                returns = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+                returns = paginator.page(paginator.num_pages)
+            dict = {'daily_list':returns}
+            return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
         return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('date')
         if start_date is not None:
@@ -215,18 +256,27 @@ def return_report_view(request):
         if part_no is not None:
             return_list = return_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(return_list,50)
-        page = request.GET.get('page')
-        try:
-            returns = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            returns = paginator.page(1)
-        except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-            returns = paginator.page(paginator.num_pages)
-        dict = {'monthly_list':returns}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            response = render_to_response("website/monthly-spreadsheet.html", {
+                'monthly_list': return_list,
+            })
+            filename = "return-monthly-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else:
+            paginator = Paginator(return_list,50)
+            page = request.GET.get('page')
+            try:
+                returns = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                returns = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+                returns = paginator.page(paginator.num_pages)
+            dict = {'monthly_list':returns}
+            return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
@@ -235,11 +285,26 @@ def return_report_view(request):
         print params
         result = get_sql_data_params(Sql.monthly_return_sql,params)
 
-        dict = {'summary_list': result,
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            for i, val in enumerate(result):
+                str_val = "size: " + val.get("size")
+                val.update({"size":str_val})
+            dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月")}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+            response = render_to_response("website/summary-spreadsheet.html", dict)
+            filename = "return-summary-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else :
+            dict = {'summary_list': result,
+            'current_month':first_day_of_current_month.strftime("%Y年%m月"),
+            'second_month':first_day_of_second_month.strftime("%Y年%m月"),
+            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+
+            return render_to_response('website/report.html', RequestContext(request, dict))
 
 @login_required
 def delivery_report_view(request):
@@ -247,6 +312,7 @@ def delivery_report_view(request):
     start_date = request.GET.get('startDate');
     end_date = request.GET.get('endDate');
     part_no = request.GET.get('part-no');
+    export_excel = request.GET.get("export-excel");
 
     print start_date,end_date,part_no
 
@@ -263,18 +329,27 @@ def delivery_report_view(request):
         if part_no is not None:
             delivery_list = delivery_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(delivery_list,1)
-        page = request.GET.get('page')
-        try:
-            deliveries = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            deliveries = paginator.page(1)
-        except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-            deliveries = paginator.page(paginator.num_pages)
-        dict = {'daily_list':deliveries}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            response = render_to_response("website/daily-spreadsheet.html", {
+                'daily_list': delivery_list,
+            })
+            filename = "delivery-daily-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else:
+            paginator = Paginator(delivery_list,1)
+            page = request.GET.get('page')
+            try:
+                deliveries = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                deliveries = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+                deliveries = paginator.page(paginator.num_pages)
+            dict = {'daily_list':deliveries}
+            return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
         delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('date')
         if start_date is not None:
@@ -292,18 +367,27 @@ def delivery_report_view(request):
         if part_no is not None:
             delivery_list = delivery_list.filter(OTItem__part_no__contains=part_no)
 
-        paginator = Paginator(delivery_list,50)
-        page = request.GET.get('page')
-        try:
-            deliveries = paginator.page(page)
-        except PageNotAnInteger:
-            # If page is not an integer, deliver first page.
-            deliveries = paginator.page(1)
-        except EmptyPage:
-        # If page is out of range (e.g. 9999), deliver last page of results.
-            deliveries = paginator.page(paginator.num_pages)
-        dict = {'monthly_list':deliveries}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            response = render_to_response("website/monthly-spreadsheet.html", {
+                'monthly_list': delivery_list,
+            })
+            filename = "delivery-monthly-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else:
+            paginator = Paginator(delivery_list,50)
+            page = request.GET.get('page')
+            try:
+                deliveries = paginator.page(page)
+            except PageNotAnInteger:
+                # If page is not an integer, deliver first page.
+                deliveries = paginator.page(1)
+            except EmptyPage:
+            # If page is out of range (e.g. 9999), deliver last page of results.
+                deliveries = paginator.page(paginator.num_pages)
+            dict = {'monthly_list':deliveries}
+            return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
@@ -312,16 +396,32 @@ def delivery_report_view(request):
         print params
         result = get_sql_data_params(Sql.monthly_delivery_sql,params)
 
-        dict = {'summary_list': result,
+
+        if export_excel is not None and export_excel.upper() == 'TRUE':
+            for i, val in enumerate(result):
+                str_val = "size: " + val.get("size")
+                val.update({"size":str_val})
+            dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月")}
-        return render_to_response('website/report.html', RequestContext(request, dict))
+
+            response = render_to_response("website/summary-spreadsheet.html", dict)
+            filename = "delivery-summary-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+        else :
+            dict = {'summary_list': result,
+            'current_month':first_day_of_current_month.strftime("%Y年%m月"),
+            'second_month':first_day_of_second_month.strftime("%Y年%m月"),
+            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+            return render_to_response('website/report.html', RequestContext(request, dict))
 
 @login_required
 def summary_report_view(request):
+    export_excel = request.GET.get("export-excel");
 
-    #inventory_list = OTItemDaily.objects.values('OTItem').annotate(sum = Sum('amount'))
     inventory_list = get_sql_data(Sql.summary_sql)
     for i, val in enumerate(inventory_list):
 
@@ -332,8 +432,20 @@ def summary_report_view(request):
             supplement = 0;
         val.update({"supplement":supplement})
         print i, val
-    dict = {'inventory_list':inventory_list}
-    return render_to_response('website/summary-report.html', RequestContext(request, dict))
+    if export_excel is not None and export_excel.upper() == 'TRUE':
+            for i, val in enumerate(inventory_list):
+                str_val = "size: " + val.get("size")
+                val.update({"size":str_val})
+            dict = {'inventory_list':inventory_list}
+
+            response = render_to_response("website/summary-report-spreadsheet.html", dict)
+            filename = "summary-report-spreadsheet.xls"
+            response['Content-Disposition'] = 'attachment; filename='+filename
+            response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
+            return response
+    else :
+        dict = {'inventory_list':inventory_list}
+        return render_to_response('website/summary-report.html', RequestContext(request, dict))
 
 @login_required
 def products_view(request):

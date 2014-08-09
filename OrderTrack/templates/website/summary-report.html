@@ -19,6 +19,9 @@
 {% block content %}
      <div class="container bs-docs-container top-container">
      {% if inventory_list %}
+        <div class="search-box">
+            <button class="btn btn-info btn-sm" id="print">下载</button>
+        </div>
         <table class="table table-hover">
         <tr>
             <th>Part No.</th>
@@ -56,5 +59,54 @@
 {% endblock %}
 
 {% block javascript %}
+ <script>
+      $(document).ready(function () {
 
+         $("#print").click(function() {
+
+         var start_date = $("#from").val();
+         var end_date = $("#to").val();
+         var part_no = $("#part-no").val();
+
+         var queryParameters = {};
+         var queryString = location.search.substring(1);
+         var re = /([^&=]+)=([^&]*)/g;
+         var m;
+
+        // Creates a map with the query string parameters
+        while (m = re.exec(queryString)) {
+            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        delete queryParameters['startDate'];
+        delete queryParameters['endDate'];
+        delete queryParameters['part-no'];
+        delete queryParameters['export-excel'];
+
+        // Add new parameters or update existing ones
+        if(start_date != null && start_date != "")
+            queryParameters['startDate'] = start_date;
+        if(end_date != null && end_date != "")
+            queryParameters['endDate'] = end_date;
+        if(part_no != null && part_no !="")
+            queryParameters['part-no'] = part_no;
+
+        queryParameters['export-excel'] = 'true';
+
+        /*
+         * Replace the query portion of the URL.
+         * jQuery.param() -> create a serialized representation of an array or
+         *     object, suitable for use in a URL query string or Ajax request.
+         */
+        location.search = $.param(queryParameters);
+
+
+         });
+
+
+
+      });
+
+
+ </script>
 {% endblock %}
+

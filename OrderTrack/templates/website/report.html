@@ -32,8 +32,9 @@
             <input type="text" id="to" name="to" readonly='true'>
             <span class="alignment-right">
                 <label for="part-no">Part No</label>
-                <input type="text" id="part-no" name="part-no">
+                <input type="text" id="part-no" name="part-no" readonly="true">
                 <button class="btn btn-info btn-sm" id="query">查询</button>
+                <button class="btn btn-info btn-sm" id="print">下载</button>
             </span>
         </div>
         <table class="table table-hover">
@@ -82,9 +83,11 @@
             <input type="text" id="to" name="to" readonly='true'>
             <span class="alignment-right">
             <label for="part-no">Part No</label>
-               <input type="text" id="part-no" name="part-no">
+               <input type="text" id="part-no" name="part-no" readonly="true">
                <button class="btn btn-info btn-sm" id="query">查询</button>
+               <button class="btn btn-info btn-sm" id="print" onclick="">下载</button>
             </span>
+
         </div>
         <table class="table table-hover">
         <tr>
@@ -122,6 +125,9 @@
      {% endif %}
 
      {% if summary_list %}
+        <div class="search-box">
+            <button class="btn btn-info btn-sm" id="print">下载</button>
+        </div>
         <table class="table table-hover">
         <tr>
             <th>Part No</th>
@@ -147,6 +153,28 @@
      {% endif %}
 
     </div>
+
+
+               <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+            <h4 class="modal-title" id="myModalLabel">货物列表</h4>
+          </div>
+          <div class="modal-body">
+            ...
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+            <button id="save-modal" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
 {% endblock %}
 
 {% block javascript %}
@@ -188,6 +216,7 @@
         delete queryParameters['startDate'];
         delete queryParameters['endDate'];
         delete queryParameters['part-no'];
+        delete queryParameters['export-excel'];
 
         // Add new parameters or update existing ones
         if(start_date != null && start_date != "")
@@ -206,6 +235,70 @@
 
 
          });
+
+         $("#print").click(function() {
+
+         var start_date = $("#from").val();
+         var end_date = $("#to").val();
+         var part_no = $("#part-no").val();
+
+         var queryParameters = {};
+         var queryString = location.search.substring(1);
+         var re = /([^&=]+)=([^&]*)/g;
+         var m;
+
+        // Creates a map with the query string parameters
+        while (m = re.exec(queryString)) {
+            queryParameters[decodeURIComponent(m[1])] = decodeURIComponent(m[2]);
+        }
+        delete queryParameters['startDate'];
+        delete queryParameters['endDate'];
+        delete queryParameters['part-no'];
+        delete queryParameters['export-excel'];
+
+        // Add new parameters or update existing ones
+        if(start_date != null && start_date != "")
+            queryParameters['startDate'] = start_date;
+        if(end_date != null && end_date != "")
+            queryParameters['endDate'] = end_date;
+        if(part_no != null && part_no !="")
+            queryParameters['part-no'] = part_no;
+
+        queryParameters['export-excel'] = 'true';
+
+        /*
+         * Replace the query portion of the URL.
+         * jQuery.param() -> create a serialized representation of an array or
+         *     object, suitable for use in a URL query string or Ajax request.
+         */
+        location.search = $.param(queryParameters);
+
+
+         });
+
+        $('#part-no').click(function(){
+            $('.modal-body').load('/products/',function(result){
+                $('#myModal').modal({show:true});
+            });
+        });
+
+         var modal = $('#myModal');
+
+        // Filter clicks within the modal to those on the save button (#submit-modal)
+        modal.on('click', '#save-modal', function(e) {
+            var placeholder = "";
+            $(".selected").each(function(index, value) {
+                var part_no = $(this).find(".part-no").text();
+                console.log(part_no);
+                if (part_no.length) {
+                    $('#part-no').val(part_no);
+                    placeholder = part_no;
+                }
+            });
+            console.log(placeholder);
+            $('.part-no-cell').html(placeholder);
+        });
+
 
       });
 

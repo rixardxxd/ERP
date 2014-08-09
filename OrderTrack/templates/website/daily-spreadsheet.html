@@ -1,0 +1,21 @@
+{% load mathfilters %}
+<table class="table table-hover">
+        <tr>
+            <th>时间</th>
+            <th>Part No</th>
+            <th>Size</th>
+            <th>DI标准</th>
+            <th>Lot No</th>
+            <th>数量</th>
+        </tr>
+        {% for usage in daily_list %}
+        <tr>
+            <td>{{ usage.date | date:"Y年m月d日"}}</td>
+            <td>{{ usage.OTItem.part_no}}</td>
+            <td>{{ usage.OTItem.size}}</td>
+            <td>{{ usage.OTItem.di_standard}}</td>
+            <td>{{ usage.lot_no}}</td>
+            <td>{{ usage.amount | abs }}</td>
+        </tr>
+        {% endfor %}
+</table>

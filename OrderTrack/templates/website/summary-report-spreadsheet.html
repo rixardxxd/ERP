@@ -1,0 +1,29 @@
+{% load mathfilters %}
+<table class="table table-hover">
+        <tr>
+            <th>Part No.</th>
+            <th>Size</th>
+            <th>DI标准</th>
+            <th>寄存数量</th>
+            <th>发货总量</th>
+            <th>退货总量</th>
+            <th>使用总量</th>
+            <th>库存</th>
+            <th>需补充数量</th>
+        </tr>
+        {% for inventory in inventory_list %}
+        <tr>
+            <td>{{ inventory.part_no}}</td>
+            <td>{{ inventory.size}}</td>
+            <td>{{ inventory.di_standard}}</td>
+            <td>{{ inventory.consignment_amount}}</td>
+            <td>{{ inventory.delivery_sum | abs}} </td>
+            <td>{{ inventory.return_sum | abs}} </td>
+            <td>{{ inventory.usage_sum | abs}} </td>
+            <td>{{ inventory.total_sum }}</td>
+            <td>{{ inventory.supplement}}</td>
+
+
+        </tr>
+        {% endfor %}
+</table>
