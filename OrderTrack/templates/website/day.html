@@ -1,184 +1,154 @@
 {% extends "base.html" %}
 
 {% block meta %}
-    <title>数据录入</title>
+<title>数据录入</title>
 {% endblock %}
 
 {% block head %}
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-    <link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}vendor/datepicker/daterangepicker-bs3.css"/>
+<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+<link rel="stylesheet" type="text/css" href="{{ STATIC_URL }}vendor/datepicker/daterangepicker-bs3.css"/>
 {% endblock %}
 
 
 {% block content %}
-    <div class="container bs-docs-container top-container">
-
+<div class="container bs-docs-container top-container">
     <div class="row">
-    <div class="col-md-8 col-md-offset-2">
-        <div class="row report_section">
-            <!-- Button trigger modal -->
-            <div class="col-md-6 col-sm-6">
-                <label for="part-no">Part No.</label>
-                <input type="text" id="part-no" name="part-no" readonly='true'>
+        <div class="col-md-8 col-md-offset-2" data-alerts="alerts" data-ids="myid" data-fade="4000"></div>
+    </div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <div class="row report_section">
+                <!-- Button trigger modal -->
+                <div class="col-md-6 col-sm-6">
+                    <label for="part-no">Part No.</label>
+                    <input type="text" id="part-no" name="part-no" readonly='true'>
 
-            </div>
-            <div class="col-md-6 col-sm-6 text-right">
-                 <label for="date">日期</label>
-                 <input type="text" id="date" name="date" readonly='true'>
-            </div>
-        </div>
-        <div class="row dashboard_section_content">
-            <div class="col-lg-12 col-sm-12 col-md-12">
-                <div>
-                    <p class="section_title">退货</p>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="header">
-                            <th>Part No</th>
-                            <th>数量</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="part-no-cell"></td>
-                            <td>0</td>
-                            <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
-                        </tr>
-                        </tbody>
-                    </table>
+                <div class="col-md-6 col-sm-6 text-right">
+                    <label for="date">日期</label>
+                    <input type="text" id="date" name="date" readonly='true'>
                 </div>
             </div>
-        </div>
-        <div class="row dashboard_section_content">
-            <div class="col-lg-12 col-sm-12 col-md-12">
-                <div>
-                    <p class="section_title">发货</p>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="header">
-                            <th>Part No</th>
-                            <th>数量</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="part-no-cell"></td>
-                            <td>0</td>
-                            <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
-                        </tr>
-                        </tbody>
-                    </table>
+            <div class="row dashboard_section_content">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div>
+                        <p class="section_title">退货</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="header">
+                                <th>Part No</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="part-no-cell"></td>
+                                <td id="return-amount-cell"></td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" >添加</button>
+                                    <button class="btn btn-info btn-sm" >更新</button>
+                                    <button class="btn btn-danger btn-sm" >删除</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="row dashboard_section_content">
-            <div class="col-lg-12 col-sm-12 col-md-12">
-                <div>
-                    <p class="section_title">使用</p>
+            <div class="row dashboard_section_content">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div>
+                        <p class="section_title">发货</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="header">
+                                <th>Part No</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="part-no-cell"></td>
+                                <td id="delivery-amount-cell"></td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" >添加</button>
+                                    <button class="btn btn-info btn-sm" >更新</button>
+                                    <button class="btn btn-danger btn-sm" >删除</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-bordered">
-                        <thead>
-                        <tr class="header">
-                            <th>Part No</th>
-                            <th>数量</th>
-                            <th>操作</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                        <tr>
-                            <td class="part-no-cell"></td>
-                            <td>0</td>
-                            <td><a href="">Add</a>&nbsp;&nbsp;<a href="">Update</a>&nbsp;&nbsp;<a href="">Delete</a> </td>
-                        </tr>
-                        </tbody>
-                    </table>
+            </div>
+            <div class="row dashboard_section_content">
+                <div class="col-lg-12 col-sm-12 col-md-12">
+                    <div>
+                        <p class="section_title">使用</p>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                            <thead>
+                            <tr class="header">
+                                <th>Part No</th>
+                                <th>数量</th>
+                                <th>操作</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td class="part-no-cell"></td>
+                                <td id="usage-amount-cell"></td>
+                                <td>
+                                    <button class="btn btn-success btn-sm" >添加</button>
+                                    <button class="btn btn-info btn-sm" >更新</button>
+                                    <button class="btn btn-danger btn-sm" >删除</button>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
-    </div>
+</div>
 
 
-       <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog modal-lg">
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-            <h4 class="modal-title" id="myModalLabel">货物列表</h4>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-            <button id="save-modal" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
-          </div>
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">Close</span></button>
+                <h4 class="modal-title" id="myModalLabel">货物列表</h4>
+            </div>
+            <div class="modal-body">
+                ...
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button id="save-modal" type="button" class="btn btn-primary" data-dismiss="modal">确认</button>
+            </div>
         </div>
-      </div>
     </div>
-
+</div>
 
 
 {% endblock %}
 
 {% block javascript %}
-    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/lib/angular.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/js/app.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/js/controller.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}angular/app/js/services.js"></script>
 
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/moment.min.js"></script>
-    <script type="text/javascript" src="{{ STATIC_URL }}vendor/datepicker/daterangepicker.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/jquery.bsAlerts.min.js"></script>
+<script type="text/javascript" src="{{ STATIC_URL }}js/day.js"></script>
 
-    <script>
-    $(document).ready(function () {
-        $("#date" ).datepicker({maxDate: "+1D" });
-
-        $('#part-no').click(function(){
-            $('.modal-body').load('/products/',function(result){
-                $('#myModal').modal({show:true});
-            });
-        });
-
-        var modal = $('#myModal');
-
-
-        // Filter clicks within the modal to those on the save button (#submit-modal)
-        modal.on('click', '#save-modal', function(e) {
-            var placeholder = "";
-            $(".selected").each(function(index, value) {
-                var part_no = $(this).find(".part-no").text();
-                console.log(part_no);
-                if (part_no.length) {
-                    $('#part-no').val(part_no);
-                    placeholder = part_no;
-                }
-            });
-            console.log(placeholder);
-            $('.part-no-cell').html(placeholder);
-
-            var url = "/rest/item/daily/?date=" + $("#date").val() + "&part-no=" + placeholder;
-            console.log(url);
-            $.getJSON( url, function( data ) {
-                  console.log(data);
-             });
-        });
-
-
-
-    });
-
-
-
-    </script>
+</script>
 
 {% endblock %}

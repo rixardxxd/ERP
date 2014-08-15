@@ -18,8 +18,8 @@ body {
     background: -ms-linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
     background: -o-linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
     background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
-    abackground-color: #e8ebef;
-    abackground-color: #fff;
+    background-color: #e8ebef;
+    background-color: #fff;
     background-repeat: no-repeat;
     font-family: 'Raleway', serif;
 
@@ -63,7 +63,7 @@ body {
 div.box {
     position: relative;
     background-color: #ffffff;
-    aborder: 1px solid #a0d1fa;
+    border: 1px solid #a0d1fa;
     opacity: 1.0;
     -webkit-border-radius: 4px;
     -moz-border-radius: 4px;
@@ -859,9 +859,9 @@ div.tweet_item {
 div.panel {
     padding: 20px;
     border-bottom: 1px solid #cccccc;
-    abackground-color: transparent;
-    abackground-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,121,255,0)),to(rgba(0,121,255,0.04)));
-    abackground-image: -moz-linear-gradient(top,rgba(0,121,255,0),rgba(0,121,255,0.04));
+    background-color: transparent;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(rgba(0,121,255,0)),to(rgba(0,121,255,0.04)));
+    background-image: -moz-linear-gradient(top,rgba(0,121,255,0),rgba(0,121,255,0.04));
 }
 
 div.chart {
@@ -1060,12 +1060,12 @@ a.btn-highlight {
 
 
 div.striped {
-    abackground-color: #00649d;
+    background-color: #00649d;
     background-color: #34495e;
 }
 
 div.testimonial {
-    abackground-color: #00649d;
+    background-color: #00649d;
     background-color: #ffffff;
 }
 
@@ -1240,4 +1240,12 @@ tr.selected {
 .search-box {
     padding-top:10px;
     padding-bottom:10px;
+}
+
+.btn {
+    border-radius: 0px;
+}
+
+.navbar .navbar-inverse {
+    background-color:black;
 }
