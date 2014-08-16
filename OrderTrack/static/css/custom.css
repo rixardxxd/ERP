@@ -18,47 +18,15 @@ body {
     background: -ms-linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
     background: -o-linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
     background: linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0));
-    background-color: #e8ebef;
     background-color: #fff;
     background-repeat: no-repeat;
     font-family: 'Raleway', serif;
 
     /*font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;*/
     /*-webkit-font-smoothing: antialiased;*/
+    padding-top: 65px;
 }
 
-.navbar {
-    margin-bottom: 0;
-}
-
-.nav-white {
-    background-color: #ffffff;
-}
-
-.navbar-nav>li>a.outline {
-    border-radius: 30px;
-    -webkit-border-radius: 30px;
-    -moz-border-radius: 30px;
-    padding: 8px 20px;
-    margin-top: 7px;
-    margin-bottom: 7px;
-    max-width: 100px;
-    margin-left: 15px;
-    border: 1px solid #a0d1fa;
-    text-shadow: none;
-}
-
-.navbar-nav>li>a.outline:hover {
-    color: #ffffff;
-    text-decoration: none;
-    text-shadow: 0 1px 0 black;
-    background: #008cdd;
-    background: -webkit-linear-gradient(#489dce, #1272ac);
-    background: -moz-linear-gradient(#489dce, #1272ac);
-    background: -o-linear-gradient(#489dce, #1272ac);
-    background: -ms-linear-gradient(#489dce, #1272ac);
-    background: linear-gradient(#489dce, #1272ac);
-}
 
 div.box {
     position: relative;
@@ -179,7 +147,7 @@ a.button.blue, button.button.blue, strong.button.blue, div.button.blue {
 }
 
 .top-container {
-    margin-top: 20px;
+    margin-top: 60px;
 }
 
 .callout-copy {
@@ -1246,6 +1214,8 @@ tr.selected {
     border-radius: 0px;
 }
 
-.navbar .navbar-inverse {
-    background-color:black;
+ul#navbar-right-item {
+    margin-right: 50px;
 }
+
+
