@@ -24,6 +24,7 @@ from rest_framework.decorators import api_view
 
 import logging
 logger = logging.getLogger(__name__)
+logging.basicConfig(level=logging.DEBUG)
 
 from serializers import OTItemDailySerializer
 
@@ -96,7 +97,7 @@ def usage_report_view(request):
     print start_date,end_date,part_no
 
     if p == 'day':
-        usage_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_usage).order_by('date')
+        usage_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_usage).order_by('-date')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             start_date = tmp.strftime('%Y-%m-%d')
@@ -127,10 +128,11 @@ def usage_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 usages = paginator.page(paginator.num_pages)
-            dict = {'daily_list':usages}
+            dict = {'daily_list':usages,
+                    'title': '使用情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
-        usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('date')
+        usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('-date')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             tmp = tmp.replace(day=1)
@@ -166,7 +168,8 @@ def usage_report_view(request):
             # If page is out of range (e.g. 9999), deliver last page of results.
                 usages = paginator.page(paginator.num_pages)
 
-            dict = {'monthly_list':usages}
+            dict = {'monthly_list':usages,
+                    'title': '使用情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
@@ -193,7 +196,8 @@ def usage_report_view(request):
             dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
-            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+            'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'title': '使用情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
 
 @login_required
@@ -206,7 +210,7 @@ def return_report_view(request):
     print start_date,end_date,part_no
 
     if p == 'day':
-        return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('date')
+        return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('-date')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             start_date = tmp.strftime('%Y-%m-%d')
@@ -237,10 +241,11 @@ def return_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 returns = paginator.page(paginator.num_pages)
-            dict = {'daily_list':returns}
+            dict = {'daily_list':returns,
+                    'title': '退货情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
-        return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('date')
+        return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('-date')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             tmp = tmp.replace(day=1)
@@ -275,7 +280,8 @@ def return_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 returns = paginator.page(paginator.num_pages)
-            dict = {'monthly_list':returns}
+            dict = {'monthly_list':returns,
+                    'title': '退货情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
@@ -302,7 +308,8 @@ def return_report_view(request):
             dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
-            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+            'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'title': '退货情况'}
 
             return render_to_response('website/report.html', RequestContext(request, dict))
 
@@ -317,7 +324,7 @@ def delivery_report_view(request):
     print start_date,end_date,part_no
 
     if p == 'day':
-        delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('date')
+        delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('-date')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             start_date = tmp.strftime('%Y-%m-%d')
@@ -338,7 +345,7 @@ def delivery_report_view(request):
             response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
             return response
         else:
-            paginator = Paginator(delivery_list,1)
+            paginator = Paginator(delivery_list,50)
             page = request.GET.get('page')
             try:
                 deliveries = paginator.page(page)
@@ -348,10 +355,11 @@ def delivery_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 deliveries = paginator.page(paginator.num_pages)
-            dict = {'daily_list':deliveries}
+            dict = {'daily_list':deliveries,
+                    'title': '发货情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
     elif p == 'month':
-        delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('date')
+        delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('-date')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             tmp = tmp.replace(day=1)
@@ -386,14 +394,14 @@ def delivery_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 deliveries = paginator.page(paginator.num_pages)
-            dict = {'monthly_list':deliveries}
+            dict = {'monthly_list':deliveries,
+                    'title': '发货情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
         first_day_of_third_month = first_day_of_current_month - relativedelta(months=2)
         params = [first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
-        print params
         result = get_sql_data_params(Sql.monthly_delivery_sql,params)
 
 
@@ -415,7 +423,8 @@ def delivery_report_view(request):
             dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
-            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+            'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'title': '发货情况'}
             return render_to_response('website/report.html', RequestContext(request, dict))
 
 @login_required
@@ -428,10 +437,7 @@ def summary_report_view(request):
         total_sum = val.get("delivery_sum") - val.get("return_sum") - val.get("usage_sum")
         val.update({"total_sum":total_sum})
         supplement = val.get("consignment_amount") - total_sum
-        if val.get("consignment_amount") - total_sum < 0:
-            supplement = 0;
         val.update({"supplement":supplement})
-        print i, val
     if export_excel is not None and export_excel.upper() == 'TRUE':
             for i, val in enumerate(inventory_list):
                 str_val = "size: " + val.get("size")
@@ -451,7 +457,6 @@ def summary_report_view(request):
 def products_view(request):
     products_list = OTItem.objects.select_related('OTDIStandard').order_by('part_no')
     dict = {'products_list':products_list}
-    print products_list
     return render_to_response('website/products.html', RequestContext(request, dict))
 
 
@@ -461,7 +466,9 @@ def products_view(request):
 # ------------------------------------------------- #
 
 class OperationCode:
-    DELIVERY, RETURN, USAGE = range(3)
+    DELIVERY = "DELIVERY"
+    RETURN = "RETURN"
+    USAGE = "USAGE"
 
 def __is_user_authorized(user):
     if user.is_anonymous() or not user.is_authenticated:
@@ -469,80 +476,107 @@ def __is_user_authorized(user):
     else:
         return True
 
-def __handle_item_add(date, item_id, oid, user, amount):
+def __handle_item_add(date, part_no, amount, type):
     d = None
-    if oid == OperationCode.DELIVERY:
-        d, created = OTItemDaily.objects.get_or_create(item_id=item_id, amount=amount)
-    elif oid == OperationCode.RETURN:
-        d,created = OTItemDaily.objects.get_or_create(item_id=item_id, amount=amount)
-    elif oid == OperationCode.USAGE:
-        d, created = OTItemDaily.objects.get_or_create(item_id=item_id, amount=amount)
+    created= None
+    item = OTItem.objects.get(part_no=part_no)
+    if item:
+        try:
+            if type.upper() == OperationCode.DELIVERY:
+                d, created = OTItemDaily.objects.get_or_create(OTItem=item, amount=amount, type=OTItemDaily.type_delivery,date=date)
+            elif type.upper() == OperationCode.RETURN:
+                print type.upper()
+                d, created = OTItemDaily.objects.get_or_create(OTItem=item, amount=amount, type=OTItemDaily.type_return,date=date)
+            elif type.upper() == OperationCode.USAGE:
+                d, created = OTItemDaily.objects.get_or_create(OTItem=item, amount=amount, type=OTItemDaily.type_usage,date=date)
+        except Exception as e:
+            logger.exception('%s' % e.message)
+
+    logger.debug(d)
+    logger.debug(created)
     return d
 
-def __handle_item_update(id, item_id, oid, user, amount):
+def __handle_item_update(date, part_no, amount, type):
     d = None
-    if oid == OperationCode.DELIVERY:
-        d = OTItemDaily.objects.get(id=id)
-    elif oid == OperationCode.RETURN:
-        d = OTItemDaily.objects.get(id=id)
-    elif oid == OperationCode.USAGE:
-        d = OTItemDaily.objects.get(id=id)
-    d.item_id = item_id
-    d.amount = amount
-    d.save()
+    if type.upper() == OperationCode.DELIVERY:
+        d = OTItemDaily.objects.get(OTItem__part_no=part_no,date=date,type=OTItemDaily.type_delivery)
+    elif type.upper() == OperationCode.RETURN:
+        d = OTItemDaily.objects.get(OTItem__part_no=part_no,date=date,type=OTItemDaily.type_return)
+    elif type.upper() == OperationCode.USAGE:
+        d = OTItemDaily.objects.get(OTItem__part_no=part_no,date=date,type=OTItemDaily.type_usage)
+    if d :
+        d.amount = amount
+        d.save()
     return d
 
-def __handle_item_remove(id, oid):
-    if oid == OperationCode.DELIVERY:
-        d = OTItemDaily.objects.get(id=id)
-    elif oid == OperationCode.RETURN:
-        d = OTItemDaily.objects.get(id=id)
-    elif oid == OperationCode.USAGE:
-        d = OTItemDaily.objects.get(id=id)
-    d.delete()
+def __handle_item_remove(date, part_no, type):
+    if type.upper() == OperationCode.DELIVERY:
+        d = OTItemDaily.objects.get(OTItem__part_no=part_no,date=date,type=OTItemDaily.type_delivery)
+    elif type.upper() == OperationCode.RETURN:
+        d = OTItemDaily.objects.get(OTItem__part_no=part_no,date=date,type=OTItemDaily.type_return)
+    elif type.upper() == OperationCode.USAGE:
+        d = OTItemDaily.objects.get(OTItem__part_no=part_no,date=date,type=OTItemDaily.type_usage)
+    if d:
+        d.delete()
 
 @api_view(['POST'])
-def add_handler(request, oid):
+def add_handler(request):
     print request.DATA
     user = request.user
     if __is_user_authorized(user):
         date = request.DATA.get('date', None)
-        item_id = request.DATA.get('item_id', None)
+        part_no = request.DATA.get('part_no', None)
+        type = request.DATA.get('type', None)
         amount = int(request.DATA.get('amount', 0))
-        if item_id and date:
-            new_record = __handle_item_add(date, item_id, user, amount)
-            results = model_to_dict(new_record)
-            return Response(results, status=status.HTTP_200_OK)
+        if part_no and date and amount >0 and type:
+            tmp = datetime.strptime(date,'%m/%d/%Y')
+            date = tmp.strftime('%Y-%m-%d')
+            new_record = __handle_item_add(date, part_no, amount, type)
+            if new_record:
+                results = model_to_dict(new_record)
+                return Response(results, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
-def update_handler(request, oid):
+def update_handler(request):
     print request.DATA
     user = request.user
     if __is_user_authorized(user):
-        record_id = request.DATA.get('record_id', None)
-        item_id = request.DATA.get('item_id', None)
+        date = request.DATA.get('date', None)
+        part_no = request.DATA.get('part_no', None)
+        type = request.DATA.get('type', None)
         amount = int(request.DATA.get('amount', 0))
-        if item_id and record_id:
-            new_record = __handle_item_update(record_id, item_id, item_id, user, amount)
-            results = model_to_dict(new_record)
-            return Response(results, status=status.HTTP_200_OK)
+        if date and part_no and amount >0 and type:
+            tmp = datetime.strptime(date,'%m/%d/%Y')
+            date = tmp.strftime('%Y-%m-%d')
+            new_record = __handle_item_update(date, part_no, amount, type)
+            if new_record:
+                results = model_to_dict(new_record)
+                return Response(results, status=status.HTTP_200_OK)
+            else:
+                return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)
     else:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
 
 @api_view(['POST'])
-def remove_handler(request, oid):
+def remove_handler(request):
     print request.DATA
     user = request.user
     if __is_user_authorized(user):
-        record_id = request.DATA.get('record_id', None)
-        if record_id:
-            __handle_item_remove(record_id, oid)
+        date = request.DATA.get('date', None)
+        part_no = request.DATA.get('part_no', None)
+        type = request.DATA.get('type', None)
+        if date and part_no and type:
+            tmp = datetime.strptime(date,'%m/%d/%Y')
+            date = tmp.strftime('%Y-%m-%d')
+            __handle_item_remove(date, part_no, type)
             return Response(status=status.HTTP_200_OK)
         else:
             return Response(status=status.HTTP_400_BAD_REQUEST)

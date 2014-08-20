@@ -3,7 +3,7 @@
 {% load append_to_get %}
 
 {% block meta %}
-    <title>使用情况</title>
+    <title>{{title}}</title>
 {% endblock %}
 
 {% block head %}
@@ -91,11 +91,11 @@
         </div>
         <table class="table table-hover">
         <tr>
-            <th>使用月份</th>
+            <th>月份</th>
             <th>Part No</th>
             <th>Size</th>
             <th>DI标准</th>
-            <th>使用数量</th>
+            <th>数量</th>
         </tr>
         {% for usage in monthly_list %}
         <tr>

@@ -60,7 +60,7 @@
                 </ul>
                 <ul class="nav navbar-nav navbar-right" id="navbar-right-item">
                     {% if user.is_authenticated %}
-                    <li><a href="/profile/">{{ user.first_name }}</a>
+                    <li><a>{{ user.first_name }}</a>
                     </li>
                     <li><a href="/logout/">登出</a></li>
                     {% else %}
@@ -93,6 +93,7 @@
 <!-- Include all compiled plugins (below), or include individual files as needed -->
 <script src="{{ STATIC_URL }}js/docs.min.js"></script>
 <script src="{{ STATIC_URL }}vendor/bootstrap-3.1.1/js/bootstrap.min.js"></script>
+<script src="{{ STATIC_URL }}js/jquery.cookie.js"></script>
 {% block javascript %} {% endblock %}
 {% block analytics %} {% endblock %}
 </body>

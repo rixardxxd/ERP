@@ -21,7 +21,11 @@
             <td>{{ inventory.return_sum | abs}} </td>
             <td>{{ inventory.usage_sum | abs}} </td>
             <td>{{ inventory.total_sum }}</td>
+            {% if inventory.supplement < 0 %}
+            <td style="color:red;">{{ inventory.supplement}}</td>
+            {% else %}
             <td>{{ inventory.supplement}}</td>
+            {% endif %}
 
 
         </tr>
