@@ -4,3 +4,4 @@ staticfiles
 .idea
 .DS_Store
 logs
+logs/*
