@@ -53,6 +53,19 @@
 
         </tr>
         {% endfor %}
+        <tr>
+            <td colspan="3">总计</td>
+            <td>{{ sum_dict.sum_of_consignment_amount }}</td>
+            <td>{{ sum_dict.sum_of_delivery_sum}}</td>
+            <td>{{ sum_dict.sum_of_return_sum}}</td>
+            <td>{{ sum_dict.sum_of_usage_sum}}</td>
+            <td>{{ sum_dict.sum_of_total_sum }}</td>
+            {% if sum_dict.sum_of_supplement < 0 %}
+            <td style="color:red;">{{ sum_dict.sum_of_supplement }}</td>
+            {% else %}
+            <td>{{ sum_dict.sum_of_supplement }}</td>
+            {% endif %}
+        </tr>
         </table>
 
         {% else %}

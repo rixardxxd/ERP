@@ -83,8 +83,8 @@ def register_view(request):
 
 @login_required
 def member_view(request):
-    dict = {}
-    return render_to_response('website/day.html', RequestContext(request, dict))
+    context_dict = {}
+    return render_to_response('website/day.html', RequestContext(request, context_dict))
 
 @login_required
 def usage_report_view(request):
@@ -128,9 +128,9 @@ def usage_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 usages = paginator.page(paginator.num_pages)
-            dict = {'daily_list':usages,
+            context_dict = {'daily_list':usages,
                     'title': '使用情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
     elif p == 'month':
         usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('-date')
         if start_date is not None:
@@ -168,37 +168,55 @@ def usage_report_view(request):
             # If page is out of range (e.g. 9999), deliver last page of results.
                 usages = paginator.page(paginator.num_pages)
 
-            dict = {'monthly_list':usages,
+            context_dict = {'monthly_list':usages,
                     'title': '使用情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
         first_day_of_third_month = first_day_of_current_month - relativedelta(months=2)
-        params = [first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
+        params = [first_day_of_third_month.strftime("%Y-%m-%d"),first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
         print params
         result = get_sql_data_params(Sql.monthly_usage_sql,params)
+        #store the summation of every column
+        sum_dict = dict()
+        sum_of_history_sum = 0
+        sum_of_current_month_sum = 0
+        sum_of_second_month_sum = 0
+        sum_of_third_month_sum = 0
+        for i, val in enumerate(result):
+            print val
+            sum_of_history_sum += val.get('history_sum',0)
+            sum_of_current_month_sum += val.get('current_month_sum',0)
+            sum_of_second_month_sum += val.get('second_month_sum',0)
+            sum_of_third_month_sum += val.get('third_month_sum',0)
+        sum_dict['sum_of_history_sum'] = sum_of_history_sum
+        sum_dict['sum_of_current_month_sum'] = sum_of_current_month_sum
+        sum_dict['sum_of_second_month_sum'] = sum_of_second_month_sum
+        sum_dict['sum_of_third_month_sum'] = sum_of_third_month_sum
 
         if export_excel is not None and export_excel.upper() == 'TRUE':
             for i, val in enumerate(result):
                 str_val = "size: " + val.get("size")
                 val.update({"size":str_val})
-            dict = {'summary_list': result,
+            context_dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
-            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
-            response = render_to_response("website/summary-spreadsheet.html", dict)
+            'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'sum_dict':sum_dict}
+            response = render_to_response("website/summary-spreadsheet.html", context_dict)
             filename = "usage-summary-spreadsheet.xls"
             response['Content-Disposition'] = 'attachment; filename='+filename
             response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
             return response
         else :
-            dict = {'summary_list': result,
+            context_dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'sum_dict':sum_dict,
             'title': '使用情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
 
 @login_required
 def return_report_view(request):
@@ -241,9 +259,9 @@ def return_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 returns = paginator.page(paginator.num_pages)
-            dict = {'daily_list':returns,
+            context_dict = {'daily_list':returns,
                     'title': '退货情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
     elif p == 'month':
         return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('-date')
         if start_date is not None:
@@ -280,38 +298,56 @@ def return_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 returns = paginator.page(paginator.num_pages)
-            dict = {'monthly_list':returns,
+            context_dict = {'monthly_list':returns,
                     'title': '退货情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
         first_day_of_third_month = first_day_of_current_month - relativedelta(months=2)
-        params = [first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
+        params = [first_day_of_third_month.strftime("%Y-%m-%d"),first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
         print params
         result = get_sql_data_params(Sql.monthly_return_sql,params)
+        #store the summation of every column
+        sum_dict = dict()
+        sum_of_history_sum = 0
+        sum_of_current_month_sum = 0
+        sum_of_second_month_sum = 0
+        sum_of_third_month_sum = 0
+        for i, val in enumerate(result):
+            print val
+            sum_of_history_sum += val.get('history_sum',0)
+            sum_of_current_month_sum += val.get('current_month_sum',0)
+            sum_of_second_month_sum += val.get('second_month_sum',0)
+            sum_of_third_month_sum += val.get('third_month_sum',0)
+        sum_dict['sum_of_history_sum'] = sum_of_history_sum
+        sum_dict['sum_of_current_month_sum'] = sum_of_current_month_sum
+        sum_dict['sum_of_second_month_sum'] = sum_of_second_month_sum
+        sum_dict['sum_of_third_month_sum'] = sum_of_third_month_sum
 
         if export_excel is not None and export_excel.upper() == 'TRUE':
             for i, val in enumerate(result):
                 str_val = "size: " + val.get("size")
                 val.update({"size":str_val})
-            dict = {'summary_list': result,
+            context_dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
-            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
-            response = render_to_response("website/summary-spreadsheet.html", dict)
+            'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'sum_dict':sum_dict}
+            response = render_to_response("website/summary-spreadsheet.html", context_dict)
             filename = "return-summary-spreadsheet.xls"
             response['Content-Disposition'] = 'attachment; filename='+filename
             response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
             return response
         else :
-            dict = {'summary_list': result,
+            context_dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'sum_dict':sum_dict,
             'title': '退货情况'}
 
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
 
 @login_required
 def delivery_report_view(request):
@@ -355,9 +391,9 @@ def delivery_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 deliveries = paginator.page(paginator.num_pages)
-            dict = {'daily_list':deliveries,
+            context_dict = {'daily_list':deliveries,
                     'title': '发货情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
     elif p == 'month':
         delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('-date')
         if start_date is not None:
@@ -394,70 +430,110 @@ def delivery_report_view(request):
             except EmptyPage:
             # If page is out of range (e.g. 9999), deliver last page of results.
                 deliveries = paginator.page(paginator.num_pages)
-            dict = {'monthly_list':deliveries,
+            context_dict = {'monthly_list':deliveries,
                     'title': '发货情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
     else :
         first_day_of_current_month = date.today().replace(day=1)
         first_day_of_second_month = first_day_of_current_month - relativedelta(months=1)
         first_day_of_third_month = first_day_of_current_month - relativedelta(months=2)
-        params = [first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
+        params = [first_day_of_third_month.strftime("%Y-%m-%d"),first_day_of_current_month.strftime("%Y-%m-%d"),first_day_of_second_month.strftime("%Y-%m-%d"),first_day_of_third_month.strftime("%Y-%m-%d")]
         result = get_sql_data_params(Sql.monthly_delivery_sql,params)
-
+        #store the summation of every column
+        sum_dict = dict()
+        sum_of_history_sum = 0
+        sum_of_current_month_sum = 0
+        sum_of_second_month_sum = 0
+        sum_of_third_month_sum = 0
+        for i, val in enumerate(result):
+            print val
+            sum_of_history_sum += val.get('history_sum',0)
+            sum_of_current_month_sum += val.get('current_month_sum',0)
+            sum_of_second_month_sum += val.get('second_month_sum',0)
+            sum_of_third_month_sum += val.get('third_month_sum',0)
+        sum_dict['sum_of_history_sum'] = sum_of_history_sum
+        sum_dict['sum_of_current_month_sum'] = sum_of_current_month_sum
+        sum_dict['sum_of_second_month_sum'] = sum_of_second_month_sum
+        sum_dict['sum_of_third_month_sum'] = sum_of_third_month_sum
 
         if export_excel is not None and export_excel.upper() == 'TRUE':
             for i, val in enumerate(result):
                 str_val = "size: " + val.get("size")
                 val.update({"size":str_val})
-            dict = {'summary_list': result,
+            context_dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
-            'third_month':first_day_of_third_month.strftime("%Y年%m月")}
+            'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'sum_dict':sum_dict}
 
-            response = render_to_response("website/summary-spreadsheet.html", dict)
+            response = render_to_response("website/summary-spreadsheet.html", context_dict)
             filename = "delivery-summary-spreadsheet.xls"
             response['Content-Disposition'] = 'attachment; filename='+filename
             response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
             return response
         else :
-            dict = {'summary_list': result,
+            context_dict = {'summary_list': result,
             'current_month':first_day_of_current_month.strftime("%Y年%m月"),
             'second_month':first_day_of_second_month.strftime("%Y年%m月"),
             'third_month':first_day_of_third_month.strftime("%Y年%m月"),
+            'sum_dict':sum_dict,
             'title': '发货情况'}
-            return render_to_response('website/report.html', RequestContext(request, dict))
+            return render_to_response('website/report.html', RequestContext(request, context_dict))
 
 @login_required
 def summary_report_view(request):
     export_excel = request.GET.get("export-excel");
 
     inventory_list = get_sql_data(Sql.summary_sql)
+    # store the summation of every column
+    sum_dict = dict()
+    sum_of_consignment_amount = 0
+    sum_of_delivery_sum = 0
+    sum_of_return_sum = 0
+    sum_of_usage_sum = 0
+    sum_of_total_sum = 0
+    sum_of_supplement = 0
+
     for i, val in enumerate(inventory_list):
 
         total_sum = val.get("delivery_sum") - val.get("return_sum") - val.get("usage_sum")
         val.update({"total_sum":total_sum})
         supplement = val.get("consignment_amount") - total_sum
         val.update({"supplement":supplement})
+        sum_of_consignment_amount += val.get("consignment_amount",0)
+        sum_of_delivery_sum += val.get('delivery_sum', 0)
+        sum_of_return_sum += val.get('return_sum', 0)
+        sum_of_usage_sum += val.get('usage_sum', 0)
+        sum_of_total_sum += total_sum
+        sum_of_supplement += supplement
+
+    sum_dict['sum_of_consignment_amount'] = sum_of_consignment_amount
+    sum_dict['sum_of_delivery_sum'] = sum_of_delivery_sum
+    sum_dict['sum_of_return_sum'] = sum_of_return_sum
+    sum_dict['sum_of_usage_sum'] = sum_of_usage_sum
+    sum_dict['sum_of_total_sum'] = sum_of_total_sum
+    sum_dict['sum_of_supplement'] = sum_of_supplement
+
     if export_excel is not None and export_excel.upper() == 'TRUE':
             for i, val in enumerate(inventory_list):
                 str_val = "size: " + val.get("size")
                 val.update({"size":str_val})
-            dict = {'inventory_list':inventory_list}
+            context_dict = {'inventory_list':inventory_list,'sum_dict':sum_dict}
 
-            response = render_to_response("website/summary-report-spreadsheet.html", dict)
+            response = render_to_response("website/summary-report-spreadsheet.html", context_dict)
             filename = "summary-report-spreadsheet.xls"
             response['Content-Disposition'] = 'attachment; filename='+filename
             response['Content-Type'] = 'application/vnd.ms-excel; charset=utf-8'
             return response
     else :
-        dict = {'inventory_list':inventory_list}
-        return render_to_response('website/summary-report.html', RequestContext(request, dict))
+        context_dict = {'inventory_list':inventory_list,'sum_dict':sum_dict}
+        return render_to_response('website/summary-report.html', RequestContext(request, context_dict))
 
 @login_required
 def products_view(request):
     products_list = OTItem.objects.select_related('OTDIStandard').order_by('part_no')
-    dict = {'products_list':products_list}
-    return render_to_response('website/products.html', RequestContext(request, dict))
+    context_dict = {'products_list':products_list}
+    return render_to_response('website/products.html', RequestContext(request, context_dict))
 
 
 

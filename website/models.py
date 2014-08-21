@@ -19,7 +19,7 @@ class Consignment(models.Model):
 
     id = models.AutoField(primary_key=True)
     create_time = models.DateTimeField(auto_now_add=True)
-    amount = models.PositiveIntegerField(default=0, verbose_name="Quantity")
+    amount = models.BigIntegerField(default=0, verbose_name="Quantity")
     OTItem = models.ForeignKey('OTItem', help_text='reference to OTItem')
 
     objects = models.Manager()
@@ -52,7 +52,7 @@ class OTItem(models.Model):
     part_no = models.CharField(max_length=100, unique=True)
     size = models.CharField(max_length=100, null=True)
     di_standard = models.ForeignKey('OTDIStandard')
-    consignment_amount = models.PositiveIntegerField(default=0, verbose_name="consignment Quantity")
+    consignment_amount = models.BigIntegerField(default=0, verbose_name="consignment Quantity")
     desc = models.CharField(max_length=255, null=True, blank=True, help_text='Description of the item')
 
     # use for store the old value of consignment
@@ -95,7 +95,7 @@ class OTItemDaily(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     date = models.DateField(help_text='记录日期')
     OTItem = models.ForeignKey('OTItem')
-    amount = models.PositiveIntegerField(default=0, help_text='数量需为正', verbose_name="Quantity")
+    amount = models.BigIntegerField(default=0, help_text='数量需为正', verbose_name="Quantity")
     lot_no = models.CharField(max_length=100, null=True, default='0')
     type = models.CharField(max_length=1, choices=TYPE)
     objects = models.Manager()
@@ -194,7 +194,7 @@ class OTItemMonthly(models.Model):
     create_time = models.DateTimeField(auto_now_add=True)
     date = models.DateField(help_text='只能为每月的第一天')
     OTItem = models.ForeignKey('OTItem')
-    amount = models.PositiveIntegerField(default=0, help_text='数量需为正', verbose_name="Quantity")
+    amount = models.BigIntegerField(default=0, help_text='数量需为正', verbose_name="Quantity")
     type = models.CharField(max_length=1, choices=TYPE)
     objects = models.Manager()
 

@@ -1,22 +1,36 @@
 {% load mathfilters %}
 <table class="table table-hover">
-        <tr>
-            <th>Part No</th>
-            <th>Size</th>
-            <th>DI标准</th>
-            <th>{{third_month}}</th>
-            <th>{{second_month}}</th>
-            <th>{{current_month}}</th>
-        </tr>
-        {% for usage in summary_list %}
-        <tr>
-            <td>{{ usage.part_no}}</td>
-            <td>{{ usage.size}}</td>
-            <td>{{ usage.di_standard}}</td>
-            <td>{{ usage.third_month_sum | abs }}</td>
-            <td>{{ usage.second_month_sum | abs }}</td>
-            <td>{{ usage.current_month_sum | abs }}</td>
+    <tr>
+        <th>Part No</th>
+        <th>Size</th>
+        <th>DI标准</th>
+        <th>三个月前</th>
+        <th>{{third_month}}</th>
+        <th>{{second_month}}</th>
+        <th>{{current_month}}</th>
+        <th>总计</th>
+    </tr>
+    {% for usage in summary_list %}
+    <tr>
+        <td>{{ usage.part_no}}</td>
+        <td>{{ usage.size}}</td>
+        <td>{{ usage.di_standard}}</td>
+        <td>{{ usage.history_sum | abs}}</td>
+        <td>{{ usage.third_month_sum | abs }}</td>
+        <td>{{ usage.second_month_sum | abs }}</td>
+        <td>{{ usage.current_month_sum | abs }}</td>
+        <td>{{ usage.history_sum | add:usage.third_month_sum | add:usage.second_month_sum | add:usage.current_month_sum }}
+        </td>
 
-        </tr>
-        {% endfor %}
+    </tr>
+    {% endfor %}
+    <tr>
+        <td colspan="3">总计</td>
+        <td>{{ sum_dict.sum_of_history_sum }}</td>
+        <td>{{ sum_dict.sum_of_third_month_sum}}</td>
+        <td>{{ sum_dict.sum_of_second_month_sum}}</td>
+        <td>{{ sum_dict.sum_of_current_month_sum}}</td>
+        <td>{{ sum_dict.sum_of_history_sum | add:sum_dict.sum_of_third_month_sum | add:sum_dict.sum_of_second_month_sum | add:sum_dict.sum_of_current_month_sum }}
+        </td>
+    </tr>
 </table>
