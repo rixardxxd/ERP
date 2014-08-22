@@ -2,7 +2,8 @@
     <table class="table table-condensed" id="products-table">
             <thead>
                 <tr>
-                    <th>part no</th>
+                    <th>Item No</th>
+                    <th>Part No</th>
                     <th>size</th>
                     <th>DI标准</th>
                     <th>寄卖数量</th>
@@ -11,6 +12,7 @@
             <tbody>
                 {% for product in products_list %}
                 <tr>
+                    <td>{{ product.item_no }}</td>
                     <td class="part-no">{{ product.part_no }}</td>
                     <td>{{ product.size}}</td>
                     <td>{{ product.di_standard}}</td>

@@ -1,7 +1,8 @@
 {% load mathfilters %}
 <table class="table table-hover">
         <tr>
-            <th>Part No.</th>
+            <th>Item No</th>
+            <th>Part No</th>
             <th>Size</th>
             <th>DI标准</th>
             <th>寄存数量</th>
@@ -13,6 +14,7 @@
         </tr>
         {% for inventory in inventory_list %}
         <tr>
+            <td>{{ inventory.item_no}}</td>
             <td>{{ inventory.part_no}}</td>
             <td>{{ inventory.size}}</td>
             <td>{{ inventory.di_standard}}</td>
@@ -31,7 +33,7 @@
         </tr>
         {% endfor %}
         <tr>
-            <td colspan="3">总计</td>
+            <td colspan="4">总计</td>
             <td>{{ sum_dict.sum_of_consignment_amount }}</td>
             <td>{{ sum_dict.sum_of_delivery_sum}}</td>
             <td>{{ sum_dict.sum_of_return_sum}}</td>

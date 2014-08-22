@@ -97,7 +97,7 @@ def usage_report_view(request):
     print start_date,end_date,part_no
 
     if p == 'day':
-        usage_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_usage).order_by('-date')
+        usage_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_usage).order_by('-date','OTItem__item_no')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             start_date = tmp.strftime('%Y-%m-%d')
@@ -132,7 +132,7 @@ def usage_report_view(request):
                     'title': '使用情况'}
             return render_to_response('website/report.html', RequestContext(request, context_dict))
     elif p == 'month':
-        usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('-date')
+        usage_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_usage).order_by('-date','OTItem__item_no')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             tmp = tmp.replace(day=1)
@@ -228,7 +228,7 @@ def return_report_view(request):
     print start_date,end_date,part_no
 
     if p == 'day':
-        return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('-date')
+        return_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_return).order_by('-date','OTItem__item_no')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             start_date = tmp.strftime('%Y-%m-%d')
@@ -263,7 +263,7 @@ def return_report_view(request):
                     'title': '退货情况'}
             return render_to_response('website/report.html', RequestContext(request, context_dict))
     elif p == 'month':
-        return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('-date')
+        return_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_return).order_by('-date','OTItem__item_no')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             tmp = tmp.replace(day=1)
@@ -360,7 +360,7 @@ def delivery_report_view(request):
     print start_date,end_date,part_no
 
     if p == 'day':
-        delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('-date')
+        delivery_list = OTItemDaily.objects.select_related('OTItem').filter(type=OTItemDaily.type_delivery).order_by('-date','OTItem__item_no')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             start_date = tmp.strftime('%Y-%m-%d')
@@ -395,7 +395,7 @@ def delivery_report_view(request):
                     'title': '发货情况'}
             return render_to_response('website/report.html', RequestContext(request, context_dict))
     elif p == 'month':
-        delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('-date')
+        delivery_list = OTItemMonthly.objects.select_related('OTItem').filter(type=OTItemMonthly.type_delivery).order_by('-date','OTItem__item_no')
         if start_date is not None:
             tmp = datetime.strptime(start_date,'%m/%d/%Y')
             tmp = tmp.replace(day=1)
@@ -531,7 +531,7 @@ def summary_report_view(request):
 
 @login_required
 def products_view(request):
-    products_list = OTItem.objects.select_related('OTDIStandard').order_by('part_no')
+    products_list = OTItem.objects.select_related('OTDIStandard').order_by('item_no')
     context_dict = {'products_list':products_list}
     return render_to_response('website/products.html', RequestContext(request, context_dict))
 
