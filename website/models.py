@@ -48,7 +48,7 @@ class OTItem(models.Model):
     Generic entity table for item
     '''
     id = models.AutoField(primary_key=True)
-    item_no = models.CharField(max_length=100, unique=True, null=True)
+    item_no = models.PositiveIntegerField(unique=True,null=True)
     part_no = models.CharField(max_length=100, unique=True)
     size = models.CharField(max_length=100, null=True)
     di_standard = models.ForeignKey('OTDIStandard')
