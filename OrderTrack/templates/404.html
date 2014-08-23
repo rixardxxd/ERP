@@ -1,55 +1,27 @@
 {% extends "base.html" %}
 
-<!-- Main nav header -->
-{% block header %}
-    <header class="navbar navbar-static-top bs-docs-nav" id="top" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-            <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
-                <ul class="nav navbar-nav">
-                    <li>
-                        <a href="/">Home</a>
-                    </li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    {% if user.is_authenticated %}
-                        <li><a href="/member/"><i class="fa fa-user"></i> {{ user.first_name }}</a></li>
-                        <li><a href="/logout/" class="outline">Log Out</a></li>
-                    {% else %}
-                        <li><a href="/login/?next={{ request.path }}" class="outline">Log In</a></li>
-                    {% endif %}
-                </ul>
-
-            </nav>
-        </div>
-    </header>
-{% endblock %}
 
 {% block content %}
 
-    <div class="container bs-docs-container top-container">
+<div class="container bs-docs-container top-container">
 
     <div class="row">
         <div class="col-md-10 col-md-offset-1 box-padding">
             <div class="row">
                 <div class="col-md-12">
-                 <div id="error-block" class="centered">
-                        <h1>Page not found!</h1>
-                        <h2>Sorry, but the page you were looking for could not be found.</h2>
+                    <div id="error-block" class="centered">
+                        <h1>找不到您所需求的页面！</h1>
+
+                        <h2></h2>
+
                         <p>
-                            You can <a href="/">return to our front page</a>
+                            点击这里 <a href="/">回到主页面</a>
                         </p>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 
 {% endblock %}
