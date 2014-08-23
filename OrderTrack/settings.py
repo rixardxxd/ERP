@@ -20,11 +20,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 SECRET_KEY = 'lrn8*e4+=z*0+xdjof&a*7=fb-@h6i_@-e0_gz1&y=!c@xou)v'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
-TEMPLATE_DEBUG = True
+TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['whispering-scrubland-7579.herokuapp.com','localhost']
 
 
 # Application definition
@@ -79,7 +79,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = '/var/local/ordertrack.com/static/'
+STATIC_ROOT = 'staticfiles'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, "OrderTrack/static"),
