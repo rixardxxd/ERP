@@ -141,8 +141,7 @@ def add_to_monthly(sender, **kwargs):
             val.save()
     # create
     else:
-        tmp = datetime.strptime(instance.date,'%Y-%m-%d')
-        first_day_of_month = date(tmp.year, tmp.month, 1)
+        first_day_of_month = date(instance.date.year, instance.date.month, 1)
         difference = 0
         difference += instance.amount
         logger.debug("difference value is %d" % difference)

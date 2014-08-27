@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load mathfilters %}
 {% load append_to_get %}
+{% load humanize %}
 
 {% block meta %}
     <title>{{title}}</title>
@@ -56,7 +57,7 @@
             <td>{{ usage.OTItem.size}}</td>
             <td>{{ usage.OTItem.di_standard}}</td>
             <td>{{ usage.lot_no}}</td>
-            <td>{{ usage.amount | abs }}</td>
+            <td>{{ usage.amount | abs |intcomma }}</td>
         </tr>
         {% endfor %}
         </table>
@@ -107,7 +108,7 @@
             <td>{{ usage.OTItem.part_no}}</td>
             <td>{{ usage.OTItem.size}}</td>
             <td>{{ usage.OTItem.di_standard}}</td>
-            <td>{{ usage.amount | abs }}</td>
+            <td>{{ usage.amount | abs |intcomma }}</td>
         </tr>
         {% endfor %}
         </table>
@@ -150,21 +151,21 @@
             <td>{{ usage.part_no}}</td>
             <td>{{ usage.size}}</td>
             <td>{{ usage.di_standard}}</td>
-            <td>{{ usage.history_sum | abs}} </td>
-            <td>{{ usage.third_month_sum | abs }}</td>
-            <td>{{ usage.second_month_sum | abs }}</td>
-            <td>{{ usage.current_month_sum | abs }}</td>
-            <td>{{ usage.history_sum | add:usage.third_month_sum | add:usage.second_month_sum | add:usage.current_month_sum }}</td>
+            <td>{{ usage.history_sum | abs |intcomma }} </td>
+            <td>{{ usage.third_month_sum | abs |intcomma }}</td>
+            <td>{{ usage.second_month_sum | abs |intcomma }}</td>
+            <td>{{ usage.current_month_sum | abs |intcomma }}</td>
+            <td>{{ usage.history_sum | add:usage.third_month_sum | add:usage.second_month_sum | add:usage.current_month_sum |intcomma }}</td>
 
         </tr>
         {% endfor %}
         <tr>
             <td colspan="4">总计</td>
-            <td>{{ sum_dict.sum_of_history_sum }}</td>
-            <td>{{ sum_dict.sum_of_third_month_sum}}</td>
-            <td>{{ sum_dict.sum_of_second_month_sum}}</td>
-            <td>{{ sum_dict.sum_of_current_month_sum}}</td>
-            <td>{{ sum_dict.sum_of_history_sum | add:sum_dict.sum_of_third_month_sum | add:sum_dict.sum_of_second_month_sum| add:sum_dict.sum_of_current_month_sum}}</td>
+            <td>{{ sum_dict.sum_of_history_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_third_month_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_second_month_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_current_month_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_history_sum | add:sum_dict.sum_of_third_month_sum | add:sum_dict.sum_of_second_month_sum| add:sum_dict.sum_of_current_month_sum |intcomma }}</td>
         </tr>
         </table>
 

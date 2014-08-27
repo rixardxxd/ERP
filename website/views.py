@@ -605,8 +605,7 @@ def add_handler(request):
         type = request.DATA.get('type', None)
         amount = int(request.DATA.get('amount', 0))
         if part_no and date and amount >0 and type:
-            tmp = datetime.strptime(date,'%m/%d/%Y')
-            date = tmp.strftime('%Y-%m-%d')
+            date = datetime.strptime(date,'%m/%d/%Y')
             new_record = __handle_item_add(date, part_no, amount, type)
             if new_record:
                 results = model_to_dict(new_record)
@@ -628,8 +627,7 @@ def update_handler(request):
         type = request.DATA.get('type', None)
         amount = int(request.DATA.get('amount', 0))
         if date and part_no and amount >0 and type:
-            tmp = datetime.strptime(date,'%m/%d/%Y')
-            date = tmp.strftime('%Y-%m-%d')
+            date = datetime.strptime(date,'%m/%d/%Y')
             new_record = __handle_item_update(date, part_no, amount, type)
             if new_record:
                 results = model_to_dict(new_record)
@@ -650,8 +648,7 @@ def remove_handler(request):
         part_no = request.DATA.get('part_no', None)
         type = request.DATA.get('type', None)
         if date and part_no and type:
-            tmp = datetime.strptime(date,'%m/%d/%Y')
-            date = tmp.strftime('%Y-%m-%d')
+            date = datetime.strptime(date,'%m/%d/%Y')
             __handle_item_remove(date, part_no, type)
             return Response(status=status.HTTP_200_OK)
         else:
@@ -663,14 +660,15 @@ def remove_handler(request):
 def get_handler(request):
     print request.GET
     date = request.GET.get('date');
-    tmp = datetime.strptime(date,'%m/%d/%Y')
-    start_date = tmp.strftime('%Y-%m-%d')
     part_no = request.GET.get('part-no');
     user = request.user
     if __is_user_authorized(user) is False:
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     if date is None or part_no is None:
         return Response(status=status.HTTP_400_BAD_REQUEST)
+    tmp = datetime.strptime(date,'%m/%d/%Y')
+    start_date = tmp.strftime('%Y-%m-%d')
     records = OTItemDaily.objects.filter(date=start_date,OTItem__part_no=part_no)
     serializer = OTItemDailySerializer(records,many=True)
     return Response(serializer.data)
+

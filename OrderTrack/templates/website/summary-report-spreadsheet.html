@@ -1,4 +1,5 @@
 {% load mathfilters %}
+{% load humanize %}
 <table class="table table-hover">
         <tr>
             <th>Item No</th>
@@ -18,15 +19,15 @@
             <td>{{ inventory.part_no}}</td>
             <td>{{ inventory.size}}</td>
             <td>{{ inventory.di_standard}}</td>
-            <td>{{ inventory.consignment_amount}}</td>
-            <td>{{ inventory.delivery_sum | abs}} </td>
-            <td>{{ inventory.return_sum | abs}} </td>
-            <td>{{ inventory.usage_sum | abs}} </td>
-            <td>{{ inventory.total_sum }}</td>
+            <td>{{ inventory.consignment_amount |intcomma }}</td>
+            <td>{{ inventory.delivery_sum | abs |intcomma }} </td>
+            <td>{{ inventory.return_sum | abs |intcomma }} </td>
+            <td>{{ inventory.usage_sum | abs |intcomma }} </td>
+            <td>{{ inventory.total_sum |intcomma }}</td>
             {% if inventory.supplement < 0 %}
-            <td style="color:red;">{{ inventory.supplement}}</td>
+            <td style="color:red;">{{ inventory.supplement |intcomma }}</td>
             {% else %}
-            <td>{{ inventory.supplement}}</td>
+            <td>{{ inventory.supplement |intcomma }}</td>
             {% endif %}
 
 
@@ -34,15 +35,15 @@
         {% endfor %}
         <tr>
             <td colspan="4">总计</td>
-            <td>{{ sum_dict.sum_of_consignment_amount }}</td>
-            <td>{{ sum_dict.sum_of_delivery_sum}}</td>
-            <td>{{ sum_dict.sum_of_return_sum}}</td>
-            <td>{{ sum_dict.sum_of_usage_sum}}</td>
-            <td>{{ sum_dict.sum_of_total_sum }}</td>
+            <td>{{ sum_dict.sum_of_consignment_amount |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_delivery_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_return_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_usage_sum |intcomma }}</td>
+            <td>{{ sum_dict.sum_of_total_sum |intcomma }}</td>
             {% if sum_dict.sum_of_supplement < 0 %}
-            <td style="color:red;">{{ sum_dict.sum_of_supplement }}</td>
+            <td style="color:red;">{{ sum_dict.sum_of_supplement |intcomma }}</td>
             {% else %}
-            <td>{{ sum_dict.sum_of_supplement }}</td>
+            <td>{{ sum_dict.sum_of_supplement |intcomma }}</td>
             {% endif %}
         </tr>
 </table>

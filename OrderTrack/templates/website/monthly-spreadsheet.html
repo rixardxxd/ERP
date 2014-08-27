@@ -1,4 +1,5 @@
 {% load mathfilters %}
+{% load humanize %}
 <table class="table table-hover">
         <tr>
             <th>使用月份</th>
@@ -15,7 +16,7 @@
             <td>{{ usage.OTItem.part_no}}</td>
             <td>{{ usage.OTItem.size}}</td>
             <td>{{ usage.OTItem.di_standard}}</td>
-            <td>{{ usage.amount | abs }}</td>
+            <td>{{ usage.amount | abs |intcomma }}</td>
         </tr>
         {% endfor %}
 </table>

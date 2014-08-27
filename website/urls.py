@@ -23,3 +23,4 @@ urlpatterns = patterns('',
     url(r'^rest/item/delete/$', views.remove_handler, name="remove_handler"),
     url(r'^rest/item/daily/$', views.get_handler, name="get_handler"),
 )
+

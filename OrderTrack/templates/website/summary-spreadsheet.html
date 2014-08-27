@@ -1,4 +1,5 @@
 {% load mathfilters %}
+{% load humanize %}
 <table class="table table-hover">
     <tr>
         <th>Item No</th>
@@ -17,22 +18,22 @@
         <td>{{ usage.part_no}}</td>
         <td>{{ usage.size}}</td>
         <td>{{ usage.di_standard}}</td>
-        <td>{{ usage.history_sum | abs}}</td>
-        <td>{{ usage.third_month_sum | abs }}</td>
-        <td>{{ usage.second_month_sum | abs }}</td>
-        <td>{{ usage.current_month_sum | abs }}</td>
-        <td>{{ usage.history_sum | add:usage.third_month_sum | add:usage.second_month_sum | add:usage.current_month_sum }}
+        <td>{{ usage.history_sum | abs |intcomma }}</td>
+        <td>{{ usage.third_month_sum | abs |intcomma }}</td>
+        <td>{{ usage.second_month_sum | abs |intcomma }}</td>
+        <td>{{ usage.current_month_sum | abs |intcomma }}</td>
+        <td>{{ usage.history_sum | add:usage.third_month_sum | add:usage.second_month_sum | add:usage.current_month_sum |intcomma }}
         </td>
 
     </tr>
     {% endfor %}
     <tr>
         <td colspan="4">总计</td>
-        <td>{{ sum_dict.sum_of_history_sum }}</td>
-        <td>{{ sum_dict.sum_of_third_month_sum}}</td>
-        <td>{{ sum_dict.sum_of_second_month_sum}}</td>
-        <td>{{ sum_dict.sum_of_current_month_sum}}</td>
-        <td>{{ sum_dict.sum_of_history_sum | add:sum_dict.sum_of_third_month_sum | add:sum_dict.sum_of_second_month_sum | add:sum_dict.sum_of_current_month_sum }}
+        <td>{{ sum_dict.sum_of_history_sum |intcomma }}</td>
+        <td>{{ sum_dict.sum_of_third_month_sum |intcomma }}</td>
+        <td>{{ sum_dict.sum_of_second_month_sum |intcomma }}</td>
+        <td>{{ sum_dict.sum_of_current_month_sum |intcomma }}</td>
+        <td>{{ sum_dict.sum_of_history_sum | add:sum_dict.sum_of_third_month_sum | add:sum_dict.sum_of_second_month_sum | add:sum_dict.sum_of_current_month_sum |intcomma }}
         </td>
     </tr>
 </table>

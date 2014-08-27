@@ -1,4 +1,5 @@
 {% load mathfilters %}
+{% load humanize %}
 <table class="table table-hover">
         <tr>
             <th>时间</th>
@@ -17,7 +18,7 @@
             <td>{{ usage.OTItem.size}}</td>
             <td>{{ usage.OTItem.di_standard}}</td>
             <td>{{ usage.lot_no}}</td>
-            <td>{{ usage.amount | abs }}</td>
+            <td>{{ usage.amount | abs |intcomma }}</td>
         </tr>
         {% endfor %}
 </table>

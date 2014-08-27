@@ -41,7 +41,8 @@ INSTALLED_APPS = (
     'mathfilters',
     'website',
     'south',
-    'dateutil'
+    'dateutil',
+    'django.contrib.humanize'
 )
 
 MIDDLEWARE_CLASSES = (

@@ -21,6 +21,6 @@ urlpatterns = patterns('',
    url(r'^password/reset/complete/$',auth_views.password_reset_complete,name='password_reset_complete'),
    url(r'^password/reset/confirm/(?P<uidb64>[0-9A-Za-z]+)-(?P<token>.+)/$',
        auth_views.password_reset_confirm, {'post_reset_redirect': '/password/reset/complete/'},name='password_reset_confirm'),
-
-
 )
+
+handler500 = 'website.error_views.server_error'

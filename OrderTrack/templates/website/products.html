@@ -1,3 +1,4 @@
+{% load humanize %}
 <div class="container" style="width:800px;height:700px;overflow:auto">
     <table class="table table-condensed" id="products-table">
             <thead>
@@ -16,7 +17,7 @@
                     <td class="part-no">{{ product.part_no }}</td>
                     <td>{{ product.size}}</td>
                     <td>{{ product.di_standard}}</td>
-                    <td>{{ product.consignment_amount }}</td>
+                    <td>{{ product.consignment_amount |intcomma }}</td>
                 </tr>
                 {% endfor %}
             </tbody>
