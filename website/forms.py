@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+# coding=gbk1
 from django import forms
 from django.utils.translation import ugettext, ugettext_lazy as _
 
@@ -9,12 +11,12 @@ class LoginForm(forms.Form):
     Base class for authenticating users. Extend this to get a form that accepts
     email/password logins.
     """
-    email = forms.EmailField(required=True)
-    password = forms.CharField(label=_("Password"), widget=forms.PasswordInput, required=True)
+    email = forms.EmailField(label=_(u"邮箱"), required=True)
+    password = forms.CharField(label=_(u"密码"), widget=forms.PasswordInput, required=True)
 
     error_messages = {
-        'invalid_login': _("Please enter a correct email and password."),
-        'inactive': _("This account is inactive."),
+        'invalid_login': _(u"邮箱或者密码不正确"),
+        'inactive': _(u"该账号已经停用"),
     }
 
     user_cache = None
@@ -55,16 +57,16 @@ class SignupForm(forms.Form):
     password.
     """
     error_messages = {
-        'duplicate_email': _("A user with that email already exists."),
-        'password_mismatch': _("The two password fields didn't match."),
+        'duplicate_email': _(u"邮箱已经存在"),
+        'password_mismatch': _(u"密码不符"),
     }
 
-    first_name = forms.CharField(required=False, max_length=100, label='First Name:')
-    last_name = forms.CharField(required=False, max_length=100, label='Last Name:')
-    email = forms.EmailField(required=True)
-    password1 = forms.CharField(label=_("Password"),
+    first_name = forms.CharField(required=False, max_length=100, label=u'名字:')
+    last_name = forms.CharField(required=False, max_length=100, label=u'姓氏:')
+    email = forms.EmailField(required=True, label=_(u"邮箱"))
+    password1 = forms.CharField(label=_(u"密码"),
         widget=forms.PasswordInput, required=True)
-    password2 = forms.CharField(label=_("Password confirmation"),
+    password2 = forms.CharField(label=_(u"确认密码"),
         widget=forms.PasswordInput, required=True,
         help_text=_("Enter the same password as above, for verification."))
 

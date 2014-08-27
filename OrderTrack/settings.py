@@ -172,3 +172,5 @@ LOGGING = {
 #     # make all loggers use the console.
 #     for logger in LOGGING['loggers']:
 #         LOGGING['loggers'][logger]['handlers'] = ['console']
+
+FILE_CHARSET = 'utf-8'
