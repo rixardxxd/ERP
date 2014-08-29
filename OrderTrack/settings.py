@@ -24,7 +24,7 @@ DEBUG = False
 
 TEMPLATE_DEBUG = False
 
-ALLOWED_HOSTS = ['whispering-scrubland-7579.herokuapp.com','localhost']
+ALLOWED_HOSTS = ['jimai.herokuapp.com','localhost']
 
 
 # Application definition
