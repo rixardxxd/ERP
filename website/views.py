@@ -505,7 +505,8 @@ def summary_report_view(request):
         sum_of_return_sum += val.get('return_sum', 0)
         sum_of_usage_sum += val.get('usage_sum', 0)
         sum_of_total_sum += total_sum
-        sum_of_supplement += supplement
+        if supplement > 0:
+            sum_of_supplement += supplement
 
     sum_dict['sum_of_consignment_amount'] = sum_of_consignment_amount
     sum_dict['sum_of_delivery_sum'] = sum_of_delivery_sum
