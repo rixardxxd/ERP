@@ -6,7 +6,6 @@ urlpatterns = patterns('',
     url(r'^$', views.main_view, name="main"),
     url(r'^login/$', views.login_view, name="login"),
     url(r'^logout/$', views.logout_view, name="logout"),
-    url(r'^register/$', views.register_view, name="register"),
 
     url(r'^member/$', views.member_view, name="member"),
     url(r'^usage-report/$', views.usage_report_view, name="usage-report"),

@@ -9,13 +9,13 @@ from django.contrib.auth.models import User
 class LoginForm(forms.Form):
     """
     Base class for authenticating users. Extend this to get a form that accepts
-    email/password logins.
+    username/password logins.
     """
-    email = forms.EmailField(label=_(u"邮箱"), required=True)
+    username = forms.CharField(label=_(u"用户名"), required=True)
     password = forms.CharField(label=_(u"密码"), widget=forms.PasswordInput, required=True)
 
     error_messages = {
-        'invalid_login': _(u"邮箱或者密码不正确"),
+        'invalid_login': _(u"用户名或者密码不正确"),
         'inactive': _(u"该账号已经停用"),
     }
 
@@ -23,12 +23,12 @@ class LoginForm(forms.Form):
 
     def clean(self):
         super(LoginForm, self).clean()
-        email = self.cleaned_data.get('email')
+        username = self.cleaned_data.get('username')
         password = self.cleaned_data.get('password')
 
-        if email and password:
-            if User.objects.filter(email=email).exists():
-                user = User.objects.get(email=email)
+        if username and password:
+            if User.objects.filter(username=username).exists():
+                user = User.objects.get(username=username)
                 self.user_cache = authenticate(username=user.username,
                                                password=password)
             if self.user_cache is None:
