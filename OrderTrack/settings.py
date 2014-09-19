@@ -174,3 +174,5 @@ LOGGING = {
 #         LOGGING['loggers'][logger]['handlers'] = ['console']
 
 FILE_CHARSET = 'utf-8'
+
+SESSION_EXPIRE_AT_BROWSER_CLOSE = True
